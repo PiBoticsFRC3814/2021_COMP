@@ -57,12 +57,14 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void disabledInit() {
+    
   }
 
   @Override
   public void disabledPeriodic() {
     m_Limelight.offLight();
-    
+    m_robotContainer.gyro.reset();
+
   }
 
   /**
@@ -96,7 +98,7 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
-    
+    m_robotContainer.gyro.reset();
   }
 
   /**

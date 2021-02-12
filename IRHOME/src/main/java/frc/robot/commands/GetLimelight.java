@@ -4,7 +4,8 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.ADXRS450_Gyro;
+import com.kauailabs.navx.frc.AHRS;
+
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Limelight;
@@ -14,9 +15,9 @@ public class GetLimelight extends CommandBase {
    * Creates a new GetLimelight.
    */
   private final Limelight m_LimeLight;
-  ADXRS450_Gyro gyro;
+  AHRS gyro;
 
-  public GetLimelight(Limelight LimeLight, ADXRS450_Gyro gyroscope) {
+  public GetLimelight(Limelight LimeLight, AHRS gyroscope) {
     m_LimeLight = LimeLight;
     gyro = gyroscope;
     addRequirements(m_LimeLight);

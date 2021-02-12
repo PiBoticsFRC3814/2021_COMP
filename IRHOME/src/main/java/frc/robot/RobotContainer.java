@@ -4,6 +4,8 @@
 
 package frc.robot;
 
+import com.kauailabs.navx.frc.AHRS;
+
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
@@ -16,6 +18,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.SerialPort;
 
 
 
@@ -28,8 +31,8 @@ import edu.wpi.first.wpilibj.Joystick;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  ADXRS450_Gyro gyro = new ADXRS450_Gyro();
-
+  //ADXRS450_Gyro gyro = new ADXRS450_Gyro();
+  AHRS gyro = new AHRS(SerialPort.Port.kMXP);
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
 
@@ -48,7 +51,6 @@ public class RobotContainer {
    * The container for the robot.  Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
-
     m_piboticsdrive.setDefaultCommand(new PiboticsDrive(() -> driverStick.getY(), () -> driverStick.getX(), () -> driverStick.getZ(), () -> gyro.getAngle(), m_piboticsdrive));
     m_LimeLight.setDefaultCommand(new GetLimelight(m_LimeLight, gyro));
     m_ControlPanel.setDefaultCommand(new GrabColorData(m_ControlPanel));
@@ -101,7 +103,7 @@ public class RobotContainer {
     shooter.whenPressed(new Shoot(m_shooter));
     shooter.whenReleased(new StopShoot(m_shooter,m_LimeLight));
 
-    FarLimelight.whenPressed(new FarLimelight(m_piboticsdrive,m_LimeLight, gyro));
+    FarLimelight.whenPressed(new Z4Limelight(m_piboticsdrive,m_LimeLight, gyro));
     FarLimelight.whenReleased(new GetLimelight(m_LimeLight, gyro));
 
 
@@ -110,7 +112,7 @@ public class RobotContainer {
     Outtake.whenReleased(new UpperIntakeOff(m_IntakeMaintain));
     
 
-    LimelightMove.whenPressed(new DriveLimelight(m_piboticsdrive,m_LimeLight, gyro));
+    LimelightMove.whenPressed(new Z1Limelight(m_piboticsdrive,m_LimeLight, gyro));
     LimelightMove.whenReleased(new GetLimelight(m_LimeLight, gyro));
 
 

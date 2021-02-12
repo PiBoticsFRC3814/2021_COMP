@@ -5,6 +5,9 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+
+import com.kauailabs.navx.frc.AHRS;
+
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -22,7 +25,7 @@ public class AutonomousShoot extends CommandBase {
   Shooter m_Shooter;
   DriveTrain m_PiboticsDrive;
   IntakeMaintain m_Intake;
-  ADXRS450_Gyro gyro;
+  AHRS gyro;
   Timer shootDelay;
   public Timer Timeguy; 
 
@@ -35,7 +38,7 @@ public class AutonomousShoot extends CommandBase {
   public static Boolean isYPos = false;
   public static Boolean isZPos = false;
 
-  public AutonomousShoot(Limelight limelight, Shooter shooter, DriveTrain drive, IntakeMaintain intake, ADXRS450_Gyro gyroscope) {
+  public AutonomousShoot(Limelight limelight, Shooter shooter, DriveTrain drive, IntakeMaintain intake, AHRS gyroscope) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_LimeLight = limelight;
     m_Shooter = shooter;
@@ -90,12 +93,12 @@ public class AutonomousShoot extends CommandBase {
           ys = 0;
           isYPos = true;
         }
-        if (m_LimeLight.z < Constants.shortLowest)
+        if (m_LimeLight.z < Constants.Z1Lowest)
         {
           zs = 0.3;
           isZPos = false;
         }
-        else if (m_LimeLight.z > Constants.shortFarthest)
+        else if (m_LimeLight.z > Constants.Z1Farthest)
         {
           zs = -0.3;
           isZPos = false;
@@ -159,12 +162,12 @@ public class AutonomousShoot extends CommandBase {
           ys = 0;
           isYPos = true;
         }
-        if (m_LimeLight.z < Constants.farLowest)
+        if (m_LimeLight.z < Constants.Z1Lowest)
         {
           zs = 0.3;
           isZPos = false;
         }
-        else if (m_LimeLight.z > Constants.farFarthest)
+        else if (m_LimeLight.z > Constants.Z1Farthest)
         {
           zs = -0.3;
           isZPos = false;

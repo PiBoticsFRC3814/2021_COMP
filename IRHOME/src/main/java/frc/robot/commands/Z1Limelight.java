@@ -5,19 +5,21 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import edu.wpi.first.wpilibj.ADXRS450_Gyro;
+
+import com.kauailabs.navx.frc.AHRS;
+
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.subsystems.Limelight;
 import frc.robot.Constants;
 import frc.robot.subsystems.DriveTrain;
 
-public class DriveLimelight extends CommandBase {
+public class Z1Limelight extends CommandBase {
   /**
    * Creates a new LimeLight.
 /** */
   Limelight m_LimeLight;
   DriveTrain m_PiboticsDrive;
-  ADXRS450_Gyro gyro;
+  AHRS gyro;
 
   public static double ys, zs;
   public static int timeOut = 0;
@@ -26,7 +28,7 @@ public class DriveLimelight extends CommandBase {
   public static Boolean isYPos = false;
   public static Boolean isZPos = false;
 
-  public DriveLimelight(DriveTrain piboticsdrive, Limelight LimeLight, ADXRS450_Gyro gyroscope) {
+  public Z1Limelight(DriveTrain piboticsdrive, Limelight LimeLight, AHRS gyroscope) {
     m_PiboticsDrive = piboticsdrive;
     m_LimeLight = LimeLight;
     gyro = gyroscope;
@@ -63,12 +65,12 @@ public class DriveLimelight extends CommandBase {
       ys = 0;
       isYPos = true;
     }
-    if (m_LimeLight.z < Constants.shortLowest)
+    if (m_LimeLight.z < Constants.Z1Lowest)
     {
       zs = 0.3;
       isZPos = false;
     }
-    else if (m_LimeLight.z > Constants.shortFarthest)
+    else if (m_LimeLight.z > Constants.Z1Farthest)
     {
       zs = -0.3;
       isZPos = false;

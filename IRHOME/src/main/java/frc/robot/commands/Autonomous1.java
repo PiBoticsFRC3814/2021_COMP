@@ -4,7 +4,8 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.ADXRS450_Gyro;
+import com.kauailabs.navx.frc.AHRS;
+
 import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
 import frc.robot.subsystems.*;
 
@@ -16,7 +17,7 @@ public class Autonomous1 extends SequentialCommandGroup {
   /**
    * Creates a new Autonomous1.
    */
-  public Autonomous1(DriveTrain piboticsdrive, Limelight limeLight, Shooter piboticsShooter, IntakeMaintain intake, ADXRS450_Gyro gyro) {
+  public Autonomous1(DriveTrain piboticsdrive, Limelight limeLight, Shooter piboticsShooter, IntakeMaintain intake, AHRS gyro) {
    addCommands(
      new AutonomousShoot(limeLight, piboticsShooter, piboticsdrive, intake, gyro),
      new CrossLine(piboticsdrive)

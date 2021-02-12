@@ -28,7 +28,7 @@ public class Limelight extends SubsystemBase {
 
   public int closest(double gyro) {
     // 1 = short, 2 = long, 0 = no data xv
-    getData(gyro);
+    /*getData(gyro);
     distanceShort = Math.abs(Constants.shortFarthest - z);
     distanceLong = Math.abs(Constants.farLowest - z);
 
@@ -43,7 +43,7 @@ public class Limelight extends SubsystemBase {
     else
     {
       closest = 0;
-    }
+    }*/
     return closest;
   }
 

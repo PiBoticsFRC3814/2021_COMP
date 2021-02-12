@@ -33,9 +33,9 @@ public class Shoot extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    //tempSpeed=SmartDashboard.getNumber("VariableSpeed", 0.0);
-    //SmartDashboard.putNumber("VariableSpeed", tempSpeed);
-    m_shooter.WheelsOn(0.85);
+    tempSpeed=SmartDashboard.getNumber("VariableSpeed", 0.0);
+    SmartDashboard.putNumber("VariableSpeed", tempSpeed);
+    m_shooter.WheelsOn(tempSpeed);
   }
 
   // Called once the command ends or is interrupted.
