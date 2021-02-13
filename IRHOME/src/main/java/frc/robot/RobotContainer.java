@@ -81,12 +81,7 @@ public class RobotContainer {
     final JoystickButton Position = new JoystickButton(driverStick, 11);
     final JoystickButton Rotation = new JoystickButton(driverStick, 12);
     final JoystickButton Outtake = new JoystickButton(driverStick, 5);
-
-    final JoystickButton climbUp = new JoystickButton(buttonStick, 3);
-    final JoystickButton climbDown = new JoystickButton(buttonStick, 1);
-    final JoystickButton balanceLeft = new JoystickButton(buttonStick, 9);
-    final JoystickButton balanceRight = new JoystickButton(buttonStick, 10);
-    final JoystickButton ToggleLight = new JoystickButton(buttonStick, 4);
+    final JoystickButton ToggleLight = new JoystickButton(driverStick, 4);
 
 
 
