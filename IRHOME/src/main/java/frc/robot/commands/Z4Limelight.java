@@ -6,7 +6,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-import com.kauailabs.navx.frc.AHRS;
+import com.analog.adis16448.frc.ADIS16448_IMU;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.subsystems.Limelight;
@@ -19,7 +19,7 @@ public class Z4Limelight extends CommandBase {
 /** */
   Limelight m_LimeLight;
   DriveTrain m_PiboticsDrive;
-  AHRS gyro;
+  ADIS16448_IMU gyro;
 
   public static double ys, zs;
   public static int timeOut = 0;
@@ -28,7 +28,7 @@ public class Z4Limelight extends CommandBase {
   public static Boolean isYPos = false;
   public static Boolean isZPos = false;
 
-  public Z4Limelight(DriveTrain piboticsdrive, Limelight LimeLight, AHRS gyroscope) {
+  public Z4Limelight(DriveTrain piboticsdrive, Limelight LimeLight, ADIS16448_IMU gyroscope) {
     m_PiboticsDrive = piboticsdrive;
     m_LimeLight = LimeLight;
     gyro = gyroscope;

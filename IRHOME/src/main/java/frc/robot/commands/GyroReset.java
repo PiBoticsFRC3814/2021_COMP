@@ -4,47 +4,35 @@
 
 package frc.robot.commands;
 
-
 import com.analog.adis16448.frc.ADIS16448_IMU;
 
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Limelight;
 
-public class GetLimelight extends CommandBase {
-  /**
-   * Creates a new GetLimelight.
-   */
-  private final Limelight m_LimeLight;
+public class GyroReset extends CommandBase {
+  /** Creates a new GyroReset. */
   ADIS16448_IMU gyro;
-
-  public GetLimelight(Limelight LimeLight, ADIS16448_IMU gyroscope) {
-    m_LimeLight = LimeLight;
-    gyro = gyroscope;
-    addRequirements(m_LimeLight);
+  public GyroReset(ADIS16448_IMU gyroscope) {
     // Use addRequirements() here to declare subsystem dependencies.
+    gyro = gyroscope;
   }
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
-  }
+  public void initialize() {}
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_LimeLight.displayOutput(gyro.getAngle());
-    SmartDashboard.putBoolean("Target Acquired", m_LimeLight.isValidTarget());
+    gyro.reset();
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {
-  }
+  public void end(boolean interrupted) {}
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return true;
   }
 }

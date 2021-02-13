@@ -6,6 +6,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj2.command.button.NetworkButton;
 import frc.robot.Constants;
 import frc.robot.subsystems.DriveTrain;
 import java.util.function.DoubleSupplier;
@@ -90,7 +91,7 @@ public class PiboticsDrive extends CommandBase {
     
 
     m_drivetrain.Drive(-y, -x, z, m_gyro.getAsDouble());
-    SmartDashboard.putNumber("Gyro", m_gyro.getAsDouble());
+    SmartDashboard.putNumber("Gyro ADIS", m_gyro.getAsDouble());
   }
 
   // Called once the command ends or is interrupted.

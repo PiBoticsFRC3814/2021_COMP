@@ -6,7 +6,7 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-import com.kauailabs.navx.frc.AHRS;
+import com.analog.adis16448.frc.ADIS16448_IMU;
 
 import edu.wpi.first.wpilibj.ADXRS450_Gyro;
 import edu.wpi.first.wpilibj.Timer;
@@ -25,7 +25,7 @@ public class AutonomousShoot extends CommandBase {
   Shooter m_Shooter;
   DriveTrain m_PiboticsDrive;
   IntakeMaintain m_Intake;
-  AHRS gyro;
+  ADIS16448_IMU gyro;
   Timer shootDelay;
   public Timer Timeguy; 
 
@@ -38,7 +38,7 @@ public class AutonomousShoot extends CommandBase {
   public static Boolean isYPos = false;
   public static Boolean isZPos = false;
 
-  public AutonomousShoot(Limelight limelight, Shooter shooter, DriveTrain drive, IntakeMaintain intake, AHRS gyroscope) {
+  public AutonomousShoot(Limelight limelight, Shooter shooter, DriveTrain drive, IntakeMaintain intake, ADIS16448_IMU gyroscope) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_LimeLight = limelight;
     m_Shooter = shooter;

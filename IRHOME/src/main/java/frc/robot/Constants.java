@@ -26,13 +26,13 @@ public final class Constants {
     public static final int cMotor = 40;
     public static final int bMotor = 41;
     public static final int blMotor = 50;
+    public static final int ControlPanelMotor = 30;
+    public static final int shooterMotor = 60;
     //mecanum drive(lf, lr, rf, rr)
     public static final int lf = 1;
     public static final int lr = 2;
     public static final int rf = 3;
     public static final int rr = 4;
-    public static final int ControlPanelMotor = 30;
-    public static final int shooterMotor = 60;
 //Digital Input IDs
     public static final int lowerInput = 1;
     public static final int upperInput = 2;

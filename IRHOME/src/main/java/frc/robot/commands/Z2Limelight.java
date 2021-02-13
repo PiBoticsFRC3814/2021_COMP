@@ -4,19 +4,17 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
 
 import com.analog.adis16448.frc.ADIS16448_IMU;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.subsystems.Limelight;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.Limelight;
 
-public class Z1Limelight extends CommandBase {
-  /**
-   * Creates a new LimeLight.
-/** */
+public class Z2Limelight extends CommandBase {
+  /** Creates a new Z2Limelight. */
   Limelight m_LimeLight;
   DriveTrain m_PiboticsDrive;
   ADIS16448_IMU gyro;
@@ -28,7 +26,8 @@ public class Z1Limelight extends CommandBase {
   public static Boolean isYPos = false;
   public static Boolean isZPos = false;
 
-  public Z1Limelight(DriveTrain piboticsdrive, Limelight LimeLight, ADIS16448_IMU gyroscope) {
+
+  public Z2Limelight(DriveTrain piboticsdrive, Limelight LimeLight, ADIS16448_IMU gyroscope) {
     m_PiboticsDrive = piboticsdrive;
     m_LimeLight = LimeLight;
     gyro = gyroscope;
@@ -39,9 +38,7 @@ public class Z1Limelight extends CommandBase {
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {
-    gyro.reset();
-  }
+  public void initialize() {}
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
@@ -109,12 +106,11 @@ public class Z1Limelight extends CommandBase {
     SmartDashboard.putNumber("Counter", timeOut);
     SmartDashboard.putNumber("pos", position);
     SmartDashboard.putBoolean("ValidTarget", m_LimeLight.isValidTarget());
-}
+  }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {
-  }
+  public void end(boolean interrupted) {}
 
   // Returns true when the command should end.
   @Override

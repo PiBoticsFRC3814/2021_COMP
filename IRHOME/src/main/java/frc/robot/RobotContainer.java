@@ -4,21 +4,20 @@
 
 package frc.robot;
 
-import com.kauailabs.navx.frc.AHRS;
+import com.analog.adis16448.frc.ADIS16448_IMU;
 
-import edu.wpi.first.wpilibj.ADXRS450_Gyro;
+import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.DriverStation.Alliance;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
-import frc.robot.Constants;
 import frc.robot.subsystems.Limelight;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import edu.wpi.first.wpilibj2.command.button.NetworkButton;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.SerialPort;
 
 
 
@@ -32,7 +31,10 @@ import edu.wpi.first.wpilibj.SerialPort;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
   //ADXRS450_Gyro gyro = new ADXRS450_Gyro();
-  AHRS gyro = new AHRS(SerialPort.Port.kMXP);
+  ADIS16448_IMU gyro = new ADIS16448_IMU();
+
+  NetworkTable dash;
+
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
 
@@ -43,7 +45,6 @@ public class RobotContainer {
   private final ControlPanel m_ControlPanel = new ControlPanel();
 
   private final Joystick driverStick = new Joystick(Constants.oi_Driver);
-  private final Joystick buttonStick = new Joystick(Constants.oi_Operator);
 
   private final CommandBase m_autonomousCommand = new Autonomous1(m_piboticsdrive,m_LimeLight,m_shooter,m_IntakeMaintain, gyro);
 
@@ -51,7 +52,7 @@ public class RobotContainer {
    * The container for the robot.  Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
-    m_piboticsdrive.setDefaultCommand(new PiboticsDrive(() -> driverStick.getY(), () -> driverStick.getX(), () -> driverStick.getZ(), () -> gyro.getAngle(), m_piboticsdrive));
+    m_piboticsdrive.setDefaultCommand(new PiboticsDrive(() -> driverStick.getY(), () -> driverStick.getX(), () -> driverStick.getZ(), () -> gyro.getGyroAngleX(), m_piboticsdrive));
     m_LimeLight.setDefaultCommand(new GetLimelight(m_LimeLight, gyro));
     m_ControlPanel.setDefaultCommand(new GrabColorData(m_ControlPanel));
     
@@ -82,6 +83,9 @@ public class RobotContainer {
     final JoystickButton Rotation = new JoystickButton(driverStick, 12);
     final JoystickButton Outtake = new JoystickButton(driverStick, 5);
     final JoystickButton ToggleLight = new JoystickButton(driverStick, 4);
+    final JoystickButton GyroReset = new JoystickButton(driverStick, 3);
+    //private final NetworkButton button = new NetworkButton(dash, "GyroReset");
+
 
 
 
@@ -118,6 +122,8 @@ public class RobotContainer {
 
     ToggleLight.whenPressed(new ToggleLimelight(m_LimeLight));
     ToggleLight.whenReleased(new GetLimelight(m_LimeLight, gyro));
+
+    GyroReset.whenPressed(new GyroReset(gyro));
   }
 
 
