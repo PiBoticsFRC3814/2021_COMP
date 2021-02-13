@@ -4,19 +4,16 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj2.command.CommandBase;
-
 import com.analog.adis16448.frc.ADIS16448_IMU;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import frc.robot.subsystems.Limelight;
-import frc.robot.subsystems.DriveTrain;
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
+import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.Limelight;
 
-public class Z4Limelight extends CommandBase {
-  /**
-   * Creates a new LimeLight.
-/** */
+public class Z3Limelight extends CommandBase {
+  /** Creates a new Z3Limelight. */
   Limelight m_LimeLight;
   DriveTrain m_PiboticsDrive;
   ADIS16448_IMU gyro;
@@ -27,14 +24,13 @@ public class Z4Limelight extends CommandBase {
 
   public static Boolean isYPos = false;
   public static Boolean isZPos = false;
-
-  public Z4Limelight(DriveTrain piboticsdrive, Limelight LimeLight, ADIS16448_IMU gyroscope) {
+  public Z3Limelight(DriveTrain piboticsdrive, Limelight LimeLight, ADIS16448_IMU gyroscope) {
+    // Use addRequirements() here to decl
     m_PiboticsDrive = piboticsdrive;
     m_LimeLight = LimeLight;
     gyro = gyroscope;
     addRequirements(m_PiboticsDrive);
     addRequirements(m_LimeLight);
-    // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
@@ -63,12 +59,12 @@ public class Z4Limelight extends CommandBase {
       ys = 0;
       isYPos = true;
     }
-    if (m_LimeLight.z < Constants.Z4Lowest)
+    if (m_LimeLight.z < Constants.Z3Lowest)
     {
       zs = 0.3;
       isZPos = false;
     }
-    else if (m_LimeLight.z > Constants.Z4Farthest)
+    else if (m_LimeLight.z > Constants.Z3Farthest)
     {
       zs = -0.3;
       isZPos = false;
@@ -111,8 +107,7 @@ public class Z4Limelight extends CommandBase {
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {
-  }
+  public void end(boolean interrupted) {}
 
   // Returns true when the command should end.
   @Override

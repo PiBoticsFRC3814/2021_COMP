@@ -6,6 +6,8 @@ package frc.robot.commands;
 
 import com.analog.adis16448.frc.ADIS16448_IMU;
 
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
 public class GyroReset extends CommandBase {
@@ -24,6 +26,7 @@ public class GyroReset extends CommandBase {
   @Override
   public void execute() {
     gyro.reset();
+    DriverStation.reportWarning("Gyro has been reset. Initiaing all else fails protocol", false);
   }
 
   // Called once the command ends or is interrupted.
@@ -33,6 +36,7 @@ public class GyroReset extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
+    SmartDashboard.putBoolean("GyroReset", false);
     return true;
   }
 }

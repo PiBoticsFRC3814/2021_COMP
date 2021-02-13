@@ -62,12 +62,12 @@ public class Z2Limelight extends CommandBase {
       ys = 0;
       isYPos = true;
     }
-    if (m_LimeLight.z < Constants.Z1Lowest)
+    if (m_LimeLight.z < Constants.Z2Lowest)
     {
       zs = 0.3;
       isZPos = false;
     }
-    else if (m_LimeLight.z > Constants.Z1Farthest)
+    else if (m_LimeLight.z > Constants.Z2Farthest)
     {
       zs = -0.3;
       isZPos = false;

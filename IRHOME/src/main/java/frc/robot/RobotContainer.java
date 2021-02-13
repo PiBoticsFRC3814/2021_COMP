@@ -7,6 +7,7 @@ package frc.robot;
 import com.analog.adis16448.frc.ADIS16448_IMU;
 
 import edu.wpi.first.networktables.NetworkTable;
+import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -33,7 +34,6 @@ public class RobotContainer {
   //ADXRS450_Gyro gyro = new ADXRS450_Gyro();
   ADIS16448_IMU gyro = new ADIS16448_IMU();
 
-  NetworkTable dash;
 
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
@@ -55,6 +55,7 @@ public class RobotContainer {
     m_piboticsdrive.setDefaultCommand(new PiboticsDrive(() -> driverStick.getY(), () -> driverStick.getX(), () -> driverStick.getZ(), () -> gyro.getGyroAngleX(), m_piboticsdrive));
     m_LimeLight.setDefaultCommand(new GetLimelight(m_LimeLight, gyro));
     m_ControlPanel.setDefaultCommand(new GrabColorData(m_ControlPanel));
+    SmartDashboard.putBoolean("GyroReset", false);
     
 
     // Configure the button bindings
@@ -76,19 +77,14 @@ public class RobotContainer {
     final JoystickButton LowerIntake = new JoystickButton(driverStick, 7);
     final JoystickButton UpperIntake = new JoystickButton(driverStick, 1);
     final JoystickButton AllIntake = new JoystickButton(driverStick, 8);
-    final JoystickButton shooter = new JoystickButton(driverStick, 2);
-    final JoystickButton LimelightMove =  new JoystickButton(driverStick, 10);
-    final JoystickButton FarLimelight = new JoystickButton(driverStick, 9);
-    final JoystickButton Position = new JoystickButton(driverStick, 11);
-    final JoystickButton Rotation = new JoystickButton(driverStick, 12);
+    final JoystickButton Shooter = new JoystickButton(driverStick, 2);
+    final JoystickButton LimelightZ1 =  new JoystickButton(driverStick, 9);
+    final JoystickButton LimelightZ2 = new JoystickButton(driverStick, 10);
+    final JoystickButton LimelightZ3 = new JoystickButton(driverStick, 11);
+    final JoystickButton LimelightZ4 = new JoystickButton(driverStick, 12);
     final JoystickButton Outtake = new JoystickButton(driverStick, 5);
     final JoystickButton ToggleLight = new JoystickButton(driverStick, 4);
-    final JoystickButton GyroReset = new JoystickButton(driverStick, 3);
-    //private final NetworkButton button = new NetworkButton(dash, "GyroReset");
-
-
-
-
+    final NetworkButton GyroReset = new NetworkButton("SmartDashboard", "GyroReset");
     
     AllIntake.whenPressed(new AllIntakeOn(m_IntakeMaintain));
     AllIntake.whenReleased(new AllIntakeOff(m_IntakeMaintain));
@@ -99,26 +95,32 @@ public class RobotContainer {
     UpperIntake.whenPressed(new UpperIntakeOn(m_IntakeMaintain));
     UpperIntake.whenReleased(new UpperIntakeOff(m_IntakeMaintain));
 
-    shooter.whenPressed(new Shoot(m_shooter));
-    shooter.whenReleased(new StopShoot(m_shooter,m_LimeLight));
+    Shooter.whenPressed(new Shoot(m_shooter));
+    Shooter.whenReleased(new StopShoot(m_shooter,m_LimeLight));
 
-    FarLimelight.whenPressed(new Z4Limelight(m_piboticsdrive,m_LimeLight, gyro));
-    FarLimelight.whenReleased(new GetLimelight(m_LimeLight, gyro));
+    LimelightZ1.whenPressed(new Z1Limelight(m_piboticsdrive,m_LimeLight, gyro));
+    LimelightZ1.whenReleased(new GetLimelight(m_LimeLight, gyro));
 
+    LimelightZ2.whenPressed(new Z2Limelight(m_piboticsdrive,m_LimeLight, gyro));
+    LimelightZ2.whenReleased(new GetLimelight(m_LimeLight, gyro));
 
+    LimelightZ3.whenPressed(new Z3Limelight(m_piboticsdrive,m_LimeLight, gyro));
+    LimelightZ3.whenReleased(new GetLimelight(m_LimeLight, gyro));
+
+    LimelightZ4.whenPressed(new Z4Limelight(m_piboticsdrive,m_LimeLight, gyro));
+    LimelightZ4.whenReleased(new GetLimelight(m_LimeLight, gyro));
 
     Outtake.whenPressed(new IntakeReverse(m_IntakeMaintain));
     Outtake.whenReleased(new UpperIntakeOff(m_IntakeMaintain));
     
 
-    LimelightMove.whenPressed(new Z1Limelight(m_piboticsdrive,m_LimeLight, gyro));
-    LimelightMove.whenReleased(new GetLimelight(m_LimeLight, gyro));
+    
 
 
-    Position.whenPressed(new PositionControl(m_ControlPanel));
-    Position.whenReleased(new StopControlPanel(m_ControlPanel));
-    Rotation.whenPressed(new RotationControl(m_ControlPanel));
-    Rotation.whenReleased(new StopControlPanel(m_ControlPanel));
+    //Position.whenPressed(new PositionControl(m_ControlPanel));
+    //Position.whenReleased(new StopControlPanel(m_ControlPanel));
+    //Rotation.whenPressed(new RotationControl(m_ControlPanel));
+    //Rotation.whenReleased(new StopControlPanel(m_ControlPanel));
 
     ToggleLight.whenPressed(new ToggleLimelight(m_LimeLight));
     ToggleLight.whenReleased(new GetLimelight(m_LimeLight, gyro));
