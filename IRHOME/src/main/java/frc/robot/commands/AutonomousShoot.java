@@ -6,7 +6,6 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 
-import com.analog.adis16448.frc.ADIS16448_IMU;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -24,7 +23,6 @@ public class AutonomousShoot extends CommandBase {
   Shooter m_Shooter;
   DriveTrain m_PiboticsDrive;
   IntakeMaintain m_Intake;
-  ADIS16448_IMU gyro;
   Timer shootDelay;
   public Timer Timeguy; 
 
@@ -37,13 +35,12 @@ public class AutonomousShoot extends CommandBase {
   public static Boolean isYPos = false;
   public static Boolean isZPos = false;
 
-  public AutonomousShoot(Limelight limelight, Shooter shooter, DriveTrain drive, IntakeMaintain intake, ADIS16448_IMU gyroscope) {
+  public AutonomousShoot(Limelight limelight, Shooter shooter, DriveTrain drive, IntakeMaintain intake) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_LimeLight = limelight;
     m_Shooter = shooter;
     m_PiboticsDrive = drive;
     m_Intake = intake;
-    gyro = gyroscope;
     addRequirements(m_LimeLight);
     addRequirements(m_Shooter);
     addRequirements(m_PiboticsDrive);
@@ -60,21 +57,21 @@ public class AutonomousShoot extends CommandBase {
     Timeguy.start();
     shootDelay.reset();
     shootDelay.start();
-    m_LimeLight.position = false;
+    m_LimeLight.position1 = false;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    SmartDashboard.putBoolean("Position", m_LimeLight.position);
+    SmartDashboard.putBoolean("Position", m_LimeLight.position1);
     SmartDashboard.putNumber("Timer", shootDelay.get());
-    if (!m_LimeLight.position)
+    if (!m_LimeLight.position1)
     {
-      if (m_LimeLight.closest(gyro.getAngle()) == 1)
+      if (m_LimeLight.closest() == 1)
       {
         //short code
         m_LimeLight.onLight();
-        m_LimeLight.displayOutput(gyro.getAngle());
+        m_LimeLight.displayOutput();
         SmartDashboard.putBoolean("Target Acquired", m_LimeLight.isValidTarget());
 
         if (m_LimeLight.yaw > 1)
@@ -114,7 +111,7 @@ public class AutonomousShoot extends CommandBase {
         }
         else
         {
-          m_LimeLight.position = false;
+          m_LimeLight.position1 = false;
         }
 
         if (!m_LimeLight.isValidTarget())
@@ -128,7 +125,7 @@ public class AutonomousShoot extends CommandBase {
 
         if (position >= 25)
         {
-          m_LimeLight.position = true;
+          m_LimeLight.position1 = true;
           Timer.delay(1.0);
         }
         m_PiboticsDrive.Drive(zs, 0.0, ys, 0.0);
@@ -139,11 +136,11 @@ public class AutonomousShoot extends CommandBase {
         SmartDashboard.putBoolean("ValidTarget", m_LimeLight.isValidTarget());
         m_Shooter.WheelsOn(Constants.shooterSpeed);
       }
-      else if (m_LimeLight.closest(gyro.getAngle()) == 2)
+      else if (m_LimeLight.closest() == 2)
       {
         //far code
         m_LimeLight.onLight();
-        m_LimeLight.displayOutput(gyro.getAngle());
+        m_LimeLight.displayOutput();
         SmartDashboard.putBoolean("Target Acquired", m_LimeLight.isValidTarget());
       if (m_LimeLight.isValidTarget()){
         if (m_LimeLight.yaw > 1)
@@ -183,7 +180,7 @@ public class AutonomousShoot extends CommandBase {
         }
         else
         {
-          m_LimeLight.position = false;
+          m_LimeLight.position1 = false;
         }
       }
         if (!m_LimeLight.isValidTarget())
@@ -197,7 +194,7 @@ public class AutonomousShoot extends CommandBase {
     
         if (position >= 25)
         {
-          m_LimeLight.position = true;
+          m_LimeLight.position1 = true;
           Timer.delay(1);
         }
         m_PiboticsDrive.Drive(zs, 0.0, ys, 0.0);
@@ -249,7 +246,7 @@ public class AutonomousShoot extends CommandBase {
       m_LimeLight.offLight();
       isYPos = false;
       isZPos = false;
-      m_LimeLight.position = false;
+      m_LimeLight.position1 = false;
       return true;
     }
   }

@@ -15,7 +15,10 @@ public class Limelight extends SubsystemBase {
    * Creates a new Limelight.
    */
   public double yaw, z, target;
-  public boolean position = false;
+  public boolean position1 = false;
+  public boolean position2 = false;
+  public boolean position3 = false;
+  public boolean position4 = false;
   public boolean light = false;
   public double cameraAngle = 0;
   public static double distanceShort = 0;
@@ -26,7 +29,7 @@ public class Limelight extends SubsystemBase {
   public Limelight() {
   }
 
-  public int closest(double gyro) {
+  public int closest() {
     // 1 = short, 2 = long, 0 = no data xv
     /*getData(gyro);
     distanceShort = Math.abs(Constants.shortFarthest - z);
@@ -47,7 +50,7 @@ public class Limelight extends SubsystemBase {
     return closest;
   }
 
-  public void getData(double gyroAngle) {
+  public void getData() {
     cameraAngle = Constants.llAngle;
     z = (Constants.tHeight-Constants.lHeight)/(Math.tan(Math.toRadians(cameraAngle+NetworkTableInstance.getDefault().getTable("limelight").getEntry("ty").getDouble(0.0))));
     yaw = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0.0);
@@ -76,15 +79,14 @@ public class Limelight extends SubsystemBase {
 
   }
 
-  public boolean isInPosition() {
+  /*public boolean isInPosition() {
     return position;
-  }
+  }*/
 
-  public void displayOutput(double gyro) {
-    getData(gyro);
+  public void displayOutput() {
+    getData();
     SmartDashboard.putNumber("Distance", z);
     SmartDashboard.putNumber("Yaw", yaw);
-    SmartDashboard.putNumber("Gyro Angle", gyro);
   }
 
   @Override

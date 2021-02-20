@@ -6,8 +6,6 @@ package frc.robot;
 
 import com.analog.adis16448.frc.ADIS16448_IMU;
 
-import edu.wpi.first.networktables.NetworkTable;
-import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -46,16 +44,20 @@ public class RobotContainer {
 
   private final Joystick driverStick = new Joystick(Constants.oi_Driver);
 
-  private final CommandBase m_autonomousCommand = new Autonomous1(m_piboticsdrive,m_LimeLight,m_shooter,m_IntakeMaintain, gyro);
+  private final CommandBase m_autonomousCommand = new Autonomous1(m_piboticsdrive,m_LimeLight,m_shooter,m_IntakeMaintain);
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
     m_piboticsdrive.setDefaultCommand(new PiboticsDrive(() -> driverStick.getY(), () -> driverStick.getX(), () -> driverStick.getZ(), () -> gyro.getGyroAngleX(), m_piboticsdrive));
-    m_LimeLight.setDefaultCommand(new GetLimelight(m_LimeLight, gyro));
+    m_LimeLight.setDefaultCommand(new GetLimelight(m_LimeLight));
     m_ControlPanel.setDefaultCommand(new GrabColorData(m_ControlPanel));
     SmartDashboard.putBoolean("GyroReset", false);
+    SmartDashboard.putBoolean("Move Green", false);
+    SmartDashboard.putBoolean("Move Yellow", false);
+    SmartDashboard.putBoolean("Move Blue", false);
+    SmartDashboard.putBoolean("Move Red", false);
     
 
     // Configure the button bindings
@@ -85,6 +87,11 @@ public class RobotContainer {
     final JoystickButton Outtake = new JoystickButton(driverStick, 5);
     final JoystickButton ToggleLight = new JoystickButton(driverStick, 4);
     final NetworkButton GyroReset = new NetworkButton("SmartDashboard", "GyroReset");
+    final NetworkButton LimelightZ1Network = new NetworkButton("SmartDashboard", "Move Green");
+    final NetworkButton LimelightZ2Network = new NetworkButton("SmartDashboard", "Move Yellow");
+    final NetworkButton LimelightZ3Network = new NetworkButton("SmartDashboard", "Move Blue");
+    final NetworkButton LimelightZ4Network = new NetworkButton("SmartDashboard", "Move Red");
+
     
     AllIntake.whenPressed(new AllIntakeOn(m_IntakeMaintain));
     AllIntake.whenReleased(new AllIntakeOff(m_IntakeMaintain));
@@ -95,20 +102,32 @@ public class RobotContainer {
     UpperIntake.whenPressed(new UpperIntakeOn(m_IntakeMaintain));
     UpperIntake.whenReleased(new UpperIntakeOff(m_IntakeMaintain));
 
-    Shooter.whenPressed(new Shoot(m_shooter));
+    Shooter.whenPressed(new Shoot(m_shooter,m_LimeLight));
     Shooter.whenReleased(new StopShoot(m_shooter,m_LimeLight));
 
-    LimelightZ1.whenPressed(new Z1Limelight(m_piboticsdrive,m_LimeLight, gyro));
-    LimelightZ1.whenReleased(new GetLimelight(m_LimeLight, gyro));
+    LimelightZ1.whenPressed(new Z1Limelight(m_piboticsdrive,m_LimeLight));
+    LimelightZ1.whenReleased(new GetLimelight(m_LimeLight));
 
-    LimelightZ2.whenPressed(new Z2Limelight(m_piboticsdrive,m_LimeLight, gyro));
-    LimelightZ2.whenReleased(new GetLimelight(m_LimeLight, gyro));
+    LimelightZ2.whenPressed(new Z2Limelight(m_piboticsdrive,m_LimeLight));
+    LimelightZ2.whenReleased(new GetLimelight(m_LimeLight));
 
-    LimelightZ3.whenPressed(new Z3Limelight(m_piboticsdrive,m_LimeLight, gyro));
-    LimelightZ3.whenReleased(new GetLimelight(m_LimeLight, gyro));
+    LimelightZ3.whenPressed(new Z3Limelight(m_piboticsdrive,m_LimeLight));
+    LimelightZ3.whenReleased(new GetLimelight(m_LimeLight));
 
-    LimelightZ4.whenPressed(new Z4Limelight(m_piboticsdrive,m_LimeLight, gyro));
-    LimelightZ4.whenReleased(new GetLimelight(m_LimeLight, gyro));
+    LimelightZ4.whenPressed(new Z4Limelight(m_piboticsdrive,m_LimeLight));
+    LimelightZ4.whenReleased(new GetLimelight(m_LimeLight));
+
+    LimelightZ1Network.whenPressed(new Z1Limelight(m_piboticsdrive,m_LimeLight));
+    LimelightZ1Network.whenReleased(new GetLimelight(m_LimeLight));
+
+    LimelightZ2Network.whenPressed(new Z2Limelight(m_piboticsdrive,m_LimeLight));
+    LimelightZ2Network.whenReleased(new GetLimelight(m_LimeLight));
+
+    LimelightZ3Network.whenPressed(new Z3Limelight(m_piboticsdrive,m_LimeLight));
+    LimelightZ3Network.whenReleased(new GetLimelight(m_LimeLight));
+
+    LimelightZ4Network.whenPressed(new Z4Limelight(m_piboticsdrive,m_LimeLight));
+    LimelightZ4Network.whenReleased(new GetLimelight(m_LimeLight));
 
     Outtake.whenPressed(new IntakeReverse(m_IntakeMaintain));
     Outtake.whenReleased(new UpperIntakeOff(m_IntakeMaintain));
@@ -123,7 +142,7 @@ public class RobotContainer {
     //Rotation.whenReleased(new StopControlPanel(m_ControlPanel));
 
     ToggleLight.whenPressed(new ToggleLimelight(m_LimeLight));
-    ToggleLight.whenReleased(new GetLimelight(m_LimeLight, gyro));
+    ToggleLight.whenReleased(new GetLimelight(m_LimeLight));
 
     GyroReset.whenPressed(new GyroReset(gyro));
   }

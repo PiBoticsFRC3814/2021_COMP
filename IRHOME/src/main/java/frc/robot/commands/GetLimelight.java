@@ -5,7 +5,6 @@
 package frc.robot.commands;
 
 
-import com.analog.adis16448.frc.ADIS16448_IMU;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -16,11 +15,9 @@ public class GetLimelight extends CommandBase {
    * Creates a new GetLimelight.
    */
   private final Limelight m_LimeLight;
-  ADIS16448_IMU gyro;
 
-  public GetLimelight(Limelight LimeLight, ADIS16448_IMU gyroscope) {
+  public GetLimelight(Limelight LimeLight) {
     m_LimeLight = LimeLight;
-    gyro = gyroscope;
     addRequirements(m_LimeLight);
     // Use addRequirements() here to declare subsystem dependencies.
   }
@@ -33,7 +30,7 @@ public class GetLimelight extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_LimeLight.displayOutput(gyro.getAngle());
+    m_LimeLight.displayOutput();
     SmartDashboard.putBoolean("Target Acquired", m_LimeLight.isValidTarget());
   }
 

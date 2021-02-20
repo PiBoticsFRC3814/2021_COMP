@@ -5,8 +5,6 @@
 package frc.robot.commands;
 
 
-import com.analog.adis16448.frc.ADIS16448_IMU;
-
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
@@ -17,7 +15,6 @@ public class Z2Limelight extends CommandBase {
   /** Creates a new Z2Limelight. */
   Limelight m_LimeLight;
   DriveTrain m_PiboticsDrive;
-  ADIS16448_IMU gyro;
 
   public static double ys, zs;
   public static int timeOut = 0;
@@ -27,10 +24,9 @@ public class Z2Limelight extends CommandBase {
   public static Boolean isZPos = false;
 
 
-  public Z2Limelight(DriveTrain piboticsdrive, Limelight LimeLight, ADIS16448_IMU gyroscope) {
+  public Z2Limelight(DriveTrain piboticsdrive, Limelight LimeLight) {
     m_PiboticsDrive = piboticsdrive;
     m_LimeLight = LimeLight;
-    gyro = gyroscope;
     addRequirements(m_PiboticsDrive);
     addRequirements(m_LimeLight);
     // Use addRequirements() here to declare subsystem dependencies.
@@ -44,7 +40,7 @@ public class Z2Limelight extends CommandBase {
   @Override
   public void execute() {
     m_LimeLight.onLight();
-    m_LimeLight.displayOutput(gyro.getAngle());
+    m_LimeLight.displayOutput();
     SmartDashboard.putBoolean("Target Acquired", m_LimeLight.isValidTarget());
 
     if (m_LimeLight.yaw > 2)
@@ -84,7 +80,7 @@ public class Z2Limelight extends CommandBase {
     }
     else
     {
-      m_LimeLight.position = false;
+      m_LimeLight.position2 = false;
     }
 
     if (!m_LimeLight.isValidTarget())
@@ -98,14 +94,10 @@ public class Z2Limelight extends CommandBase {
 
     if (position >= 25)
     {
-      m_LimeLight.position = true;
+      m_LimeLight.position2 = true;
     }
-    m_PiboticsDrive.Drive(zs, 0.0, ys, 0.0);
-    SmartDashboard.putNumber("Zs", zs);
-    SmartDashboard.putNumber("Ys", ys);
-    SmartDashboard.putNumber("Counter", timeOut);
-    SmartDashboard.putNumber("pos", position);
-    SmartDashboard.putBoolean("ValidTarget", m_LimeLight.isValidTarget());
+    m_PiboticsDrive.Drive(-zs, 0.0, ys, 0.0);
+    SmartDashboard.putBoolean("Position Yellow", m_LimeLight.position1);
   }
 
   // Called once the command ends or is interrupted.
@@ -115,7 +107,7 @@ public class Z2Limelight extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if (timeOut <= 100 || !m_LimeLight.position)
+    if (timeOut <= 100 || !m_LimeLight.position2)
     {
       return false;
     }
@@ -125,6 +117,7 @@ public class Z2Limelight extends CommandBase {
       m_LimeLight.offLight();
       isYPos = false;
       isZPos = false;
+      SmartDashboard.putBoolean("Move Yellow", false);
       return true;
     }
   }

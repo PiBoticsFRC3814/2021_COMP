@@ -46,11 +46,11 @@ public class PiboticsDrive extends CommandBase {
 
       if (x < 0.0)
       {
-        x = x + Constants.deadzoneX;
+        x = (x + Constants.deadzoneX) * 1.1111;
       }
       if (x > 0.0)
       {
-        x = x - Constants.deadzoneX;
+        x = (x - Constants.deadzoneX) * 1.1111;
       }
 
     }
@@ -62,11 +62,11 @@ public class PiboticsDrive extends CommandBase {
 
       if (y < 0.0)
       {
-        y = y + Constants.deadzoneY;
+        y = (y + Constants.deadzoneY) * 1.1111;
       }
       if (y > 0.0)
       {
-        y = y - Constants.deadzoneY;
+        y = (y - Constants.deadzoneY) * 1.1111;
       }
 
     }
@@ -78,11 +78,11 @@ public class PiboticsDrive extends CommandBase {
 
       if (z < 0.0)
       {
-        z = z + Constants.deadzoneZ;
+        z = (z + Constants.deadzoneZ)*0.7;
       }
       if (z > 0.0)
       {
-        z = z - Constants.deadzoneZ;
+        z = (z - Constants.deadzoneZ)*0.7;
       }
 
     }
