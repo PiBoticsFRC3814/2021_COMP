@@ -5,8 +5,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-
-
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.subsystems.Limelight;
 import frc.robot.Constants;
@@ -80,10 +79,12 @@ public class Z1Limelight extends CommandBase {
     if (isYPos && isZPos)
     {
       position++;
+      DriverStation.reportWarning("I made it to position once", false);
     }
     else
     {
       m_LimeLight.position1 = false;
+      DriverStation.reportWarning("I didnt make it", false);
     }
 
     if (!m_LimeLight.isValidTarget())
@@ -98,6 +99,7 @@ public class Z1Limelight extends CommandBase {
     if (position >= 25)
     {
       m_LimeLight.position1 = true;
+      DriverStation.reportWarning("I made it to my position", false);
     }
     m_PiboticsDrive.Drive(-zs, 0.0, ys, 0.0);
     SmartDashboard.putBoolean("Position Green", m_LimeLight.position1);
