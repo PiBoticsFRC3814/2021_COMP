@@ -20,8 +20,8 @@ public class Z2Limelight extends CommandBase {
   public static int timeOut = 0;
   public static int position = 0;
 
-  public static Boolean isYPos = false;
-  public static Boolean isZPos = false;
+  private Boolean isYPos = false;
+  private Boolean isZPos = false;
 
 
   public Z2Limelight(DriveTrain piboticsdrive, Limelight LimeLight) {

@@ -21,8 +21,8 @@ public class Z3Limelight extends CommandBase {
   public static int timeOut = 0;
   public static int position = 0;
 
-  public static Boolean isYPos = false;
-  public static Boolean isZPos = false;
+  private Boolean isYPos = false;
+  private Boolean isZPos = false;
   public Z3Limelight(DriveTrain piboticsdrive, Limelight LimeLight) {
     // Use addRequirements() here to decl
     m_PiboticsDrive = piboticsdrive;

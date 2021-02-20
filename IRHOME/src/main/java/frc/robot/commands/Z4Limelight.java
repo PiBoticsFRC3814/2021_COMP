@@ -22,8 +22,8 @@ public class Z4Limelight extends CommandBase {
   public static int timeOut = 0;
   public static int position = 0;
 
-  public static Boolean isYPos = false;
-  public static Boolean isZPos = false;
+  private Boolean isYPos = false;
+  private Boolean isZPos = false;
 
   public Z4Limelight(DriveTrain piboticsdrive, Limelight LimeLight) {
     m_PiboticsDrive = piboticsdrive;

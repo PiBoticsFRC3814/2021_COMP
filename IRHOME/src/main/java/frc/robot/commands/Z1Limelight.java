@@ -22,8 +22,8 @@ public class Z1Limelight extends CommandBase {
   public static int timeOut = 0;
   public static int position = 0;
 
-  public static Boolean isYPos = false;
-  public static Boolean isZPos = false;
+  private Boolean isYPos = false;
+  private Boolean isZPos = false;
 
   public Z1Limelight(DriveTrain piboticsdrive, Limelight LimeLight) {
     m_PiboticsDrive = piboticsdrive;
@@ -41,6 +41,10 @@ public class Z1Limelight extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    m_LimeLight.position2 = false;
+    m_LimeLight.position3 = false;
+    m_LimeLight.position4 = false;
+
     m_LimeLight.onLight();
     m_LimeLight.displayOutput();
     SmartDashboard.putBoolean("Target Acquired", m_LimeLight.isValidTarget());
@@ -49,11 +53,13 @@ public class Z1Limelight extends CommandBase {
     {
       ys = 0.1;
       isYPos = false;
+      m_LimeLight.position1 = false;
     }
     else if (m_LimeLight.yaw < -2)
     {
       ys = -0.1;
       isYPos = false;
+      m_LimeLight.position1 = false;
     }
     else
     {
@@ -64,11 +70,13 @@ public class Z1Limelight extends CommandBase {
     {
       zs = 0.3;
       isZPos = false;
+      m_LimeLight.position1 = false;
     }
     else if (m_LimeLight.z > Constants.Z1Farthest)
     {
       zs = -0.3;
       isZPos = false;
+      m_LimeLight.position1 = false;
     }
     else
     {
@@ -113,18 +121,20 @@ public class Z1Limelight extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if (timeOut <= 100 || !m_LimeLight.position1)
-    {
-      return false;
-    }
-    else
+    if (timeOut > 100 || m_LimeLight.position1)
     {
       m_PiboticsDrive.Drive(0.0, 0.0, 0.0, 0.0);
       m_LimeLight.offLight();
       isYPos = false;
       isZPos = false;
       SmartDashboard.putBoolean("Move Green", false);
+      DriverStation.reportWarning("Quit Command", false);
       return true;
+    }
+    else
+    {
+
+      return false;
     }
   }
 }
