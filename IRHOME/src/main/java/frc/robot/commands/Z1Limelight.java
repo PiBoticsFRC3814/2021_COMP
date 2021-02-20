@@ -47,12 +47,12 @@ public class Z1Limelight extends CommandBase {
 
     if (m_LimeLight.yaw > 2)
     {
-      ys = 0.3;
+      ys = 0.1;
       isYPos = false;
     }
     else if (m_LimeLight.yaw < -2)
     {
-      ys = -0.3;
+      ys = -0.1;
       isYPos = false;
     }
     else
