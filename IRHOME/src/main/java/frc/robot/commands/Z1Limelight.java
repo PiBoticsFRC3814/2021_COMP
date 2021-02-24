@@ -82,7 +82,7 @@ public class Z1Limelight extends CommandBase {
     {
       if (m_LimeLight.y <= 90)
       {
-        ys = -0.15;
+        ys = -0.125;
       }
       else
       {
