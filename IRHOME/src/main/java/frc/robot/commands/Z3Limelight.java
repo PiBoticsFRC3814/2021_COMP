@@ -5,6 +5,8 @@
 package frc.robot.commands;
 
 
+import com.analog.adis16448.frc.ADIS16448_IMU;
+
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -16,17 +18,20 @@ public class Z3Limelight extends CommandBase {
   /** Creates a new Z3Limelight. */
   Limelight m_LimeLight;
   DriveTrain m_PiboticsDrive;
+  ADIS16448_IMU gyro;
 
-  public static double ys, zs;
-  public static int timeOut = 0;
-  public static int position = 0;
+  private static double xs, ys, zs;
+  private static int timeOut = 0;
+  private static int position = 0;
 
+  private Boolean isXPos = false;
   private Boolean isYPos = false;
   private Boolean isZPos = false;
-  public Z3Limelight(DriveTrain piboticsdrive, Limelight LimeLight) {
+  public Z3Limelight(DriveTrain piboticsdrive, Limelight LimeLight, ADIS16448_IMU gyroscope) {
     // Use addRequirements() here to decl
     m_PiboticsDrive = piboticsdrive;
     m_LimeLight = LimeLight;
+    gyro = gyroscope;
     addRequirements(m_PiboticsDrive);
     addRequirements(m_LimeLight);
   }
@@ -34,38 +39,65 @@ public class Z3Limelight extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    timeOut = 0;
+    position = 0;
+    m_LimeLight.position3 = false;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    m_LimeLight.position1 = false;
+    m_LimeLight.position2 = false;
+    m_LimeLight.position4 = false;
     m_LimeLight.onLight();
     m_LimeLight.displayOutput();
     SmartDashboard.putBoolean("Target Acquired", m_LimeLight.isValidTarget());
-    if (m_LimeLight.yaw > 2)
+    if (m_LimeLight.x > 2)
     {
-      ys = 0.1;
-      isYPos = false;
+      xs = 0.3;
+      isXPos = false;
+
     }
-    else if (m_LimeLight.yaw < -2)
+    else if (m_LimeLight.x < -2)
     {
-      ys = -0.1;
+      xs = -0.3;
+      isXPos = false;
+
+    }
+    else
+    {
+      xs = 0;
+      isXPos = true;
+    }
+    if (m_LimeLight.y < Constants.Z3Lowest)
+    {
+      ys = 0.3;
       isYPos = false;
+
+    }
+    else if (m_LimeLight.y > Constants.Z3Farthest)
+    {
+      ys = -0.3;
+      isYPos = false;
+
     }
     else
     {
       ys = 0;
       isYPos = true;
     }
-    if (m_LimeLight.z < Constants.Z3Lowest)
+    if (gyro.getGyroAngleX() < -1)
     {
-      zs = 0.3;
+      zs = -0.1;
       isZPos = false;
+
     }
-    else if (m_LimeLight.z > Constants.Z3Farthest)
+    else if (gyro.getGyroAngleX() > 1)
     {
-      zs = -0.3;
+      zs = 0.1;
       isZPos = false;
+
     }
     else
     {
@@ -73,14 +105,13 @@ public class Z3Limelight extends CommandBase {
       isZPos = true;
     }
 
-    if (isYPos && isZPos)
+    if (isXPos && isYPos && isZPos)
     {
       position++;
       DriverStation.reportWarning("I made it to position once", false);
     }
     else
     {
-      m_LimeLight.position3 = false;
       DriverStation.reportWarning("I didnt make it", false);
     }
 
@@ -98,8 +129,7 @@ public class Z3Limelight extends CommandBase {
       m_LimeLight.position3 = true;
       DriverStation.reportWarning("I made it to my position", false);
     }
-    m_PiboticsDrive.Drive(-zs, 0.0, ys, 0.0);
-    SmartDashboard.putBoolean("Position Blue", m_LimeLight.position1);
+    m_PiboticsDrive.Drive(-ys, -xs, zs, gyro.getGyroAngleX());
   }
 
   // Called once the command ends or is interrupted.
@@ -109,18 +139,23 @@ public class Z3Limelight extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if (timeOut <= 100 || !m_LimeLight.position3)
-    {
-      return false;
-    }
-    else
+    if (timeOut > 1000 || m_LimeLight.position3)
     {
       m_PiboticsDrive.Drive(0.0, 0.0, 0.0, 0.0);
       m_LimeLight.offLight();
-      isZPos = false;
+      isXPos = false;
       isYPos = false;
+      isZPos = false;
+      timeOut = 0;
+      position = 0;
       SmartDashboard.putBoolean("Move Blue", false);
+      DriverStation.reportWarning("Quit Command", false);
       return true;
+    }
+    else
+    {
+
+      return false;
     }
   }
 }

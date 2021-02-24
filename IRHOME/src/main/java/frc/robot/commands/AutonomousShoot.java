@@ -65,7 +65,7 @@ public class AutonomousShoot extends CommandBase {
   public void execute() {
     SmartDashboard.putBoolean("Position", m_LimeLight.position1);
     SmartDashboard.putNumber("Timer", shootDelay.get());
-    if (!m_LimeLight.position1)
+    /*if (!m_LimeLight.position1)
     {
       if (m_LimeLight.closest() == 1)
       {
@@ -222,7 +222,7 @@ public class AutonomousShoot extends CommandBase {
       {
         m_Intake.intakeOff();
       }
-    }
+    }*/
 
   }
 

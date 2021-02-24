@@ -105,28 +105,28 @@ public class RobotContainer {
     Shooter.whenPressed(new Shoot(m_shooter,m_LimeLight));
     Shooter.whenReleased(new StopShoot(m_shooter,m_LimeLight));
 
-    LimelightZ1.whenPressed(new Z1Limelight(m_piboticsdrive,m_LimeLight));
+    LimelightZ1.whenPressed(new Z1Limelight(m_piboticsdrive,m_LimeLight,gyro));
     LimelightZ1.whenReleased(new GetLimelight(m_LimeLight));
 
-    LimelightZ2.whenPressed(new Z2Limelight(m_piboticsdrive,m_LimeLight));
+    LimelightZ2.whenPressed(new Z2Limelight(m_piboticsdrive,m_LimeLight,gyro));
     LimelightZ2.whenReleased(new GetLimelight(m_LimeLight));
 
-    LimelightZ3.whenPressed(new Z3Limelight(m_piboticsdrive,m_LimeLight));
+    LimelightZ3.whenPressed(new Z3Limelight(m_piboticsdrive,m_LimeLight,gyro));
     LimelightZ3.whenReleased(new GetLimelight(m_LimeLight));
 
-    LimelightZ4.whenPressed(new Z4Limelight(m_piboticsdrive,m_LimeLight));
+    LimelightZ4.whenPressed(new Z4Limelight(m_piboticsdrive,m_LimeLight,gyro));
     LimelightZ4.whenReleased(new GetLimelight(m_LimeLight));
 
-    LimelightZ1Network.whenPressed(new Z1Limelight(m_piboticsdrive,m_LimeLight));
+    LimelightZ1Network.whenPressed(new Z1Limelight(m_piboticsdrive,m_LimeLight,gyro));
     LimelightZ1Network.whenReleased(new GetLimelight(m_LimeLight));
 
-    LimelightZ2Network.whenPressed(new Z2Limelight(m_piboticsdrive,m_LimeLight));
+    LimelightZ2Network.whenPressed(new Z2Limelight(m_piboticsdrive,m_LimeLight,gyro));
     LimelightZ2Network.whenReleased(new GetLimelight(m_LimeLight));
 
-    LimelightZ3Network.whenPressed(new Z3Limelight(m_piboticsdrive,m_LimeLight));
+    LimelightZ3Network.whenPressed(new Z3Limelight(m_piboticsdrive,m_LimeLight,gyro));
     LimelightZ3Network.whenReleased(new GetLimelight(m_LimeLight));
 
-    LimelightZ4Network.whenPressed(new Z4Limelight(m_piboticsdrive,m_LimeLight));
+    LimelightZ4Network.whenPressed(new Z4Limelight(m_piboticsdrive,m_LimeLight,gyro));
     LimelightZ4Network.whenReleased(new GetLimelight(m_LimeLight));
 
     Outtake.whenPressed(new IntakeReverse(m_IntakeMaintain));

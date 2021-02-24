@@ -14,7 +14,7 @@ public class Limelight extends SubsystemBase {
   /**
    * Creates a new Limelight.
    */
-  public double yaw, z, target;
+  public double x, y, target;
   public boolean position1 = false;
   public boolean position2 = false;
   public boolean position3 = false;
@@ -52,8 +52,8 @@ public class Limelight extends SubsystemBase {
 
   public void getData() {
     cameraAngle = Constants.llAngle;
-    z = (Constants.tHeight-Constants.lHeight)/(Math.tan(Math.toRadians(cameraAngle+NetworkTableInstance.getDefault().getTable("limelight").getEntry("ty").getDouble(0.0))));
-    yaw = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0.0);
+    y = (Constants.tHeight-Constants.lHeight)/(Math.tan(Math.toRadians(cameraAngle+NetworkTableInstance.getDefault().getTable("limelight").getEntry("ty").getDouble(0.0))));
+    x = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tx").getDouble(0.0);
     target = NetworkTableInstance.getDefault().getTable("limelight").getEntry("tv").getDouble(0.0);
   }
 
@@ -85,8 +85,12 @@ public class Limelight extends SubsystemBase {
 
   public void displayOutput() {
     getData();
-    SmartDashboard.putNumber("Distance", z);
-    SmartDashboard.putNumber("Yaw", yaw);
+    SmartDashboard.putNumber("Distance", y);
+    SmartDashboard.putNumber("X Distance", x);
+    SmartDashboard.putBoolean("Position Green", position1);
+    SmartDashboard.putBoolean("Position Yellow", position2);
+    SmartDashboard.putBoolean("Position Blue", position3);
+    SmartDashboard.putBoolean("Position Red", position4);
   }
 
   @Override
