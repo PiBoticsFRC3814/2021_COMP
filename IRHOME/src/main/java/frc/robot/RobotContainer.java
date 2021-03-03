@@ -44,7 +44,7 @@ public class RobotContainer {
 
   private final Joystick driverStick = new Joystick(Constants.oi_Driver);
 
-  private final CommandBase m_autonomousCommand = new Autonomous1(m_piboticsdrive,m_LimeLight,m_shooter,m_IntakeMaintain);
+  private final CommandBase m_autonomousCommand = new Autonomous1(m_piboticsdrive,m_LimeLight,m_shooter,m_IntakeMaintain, gyro);
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
