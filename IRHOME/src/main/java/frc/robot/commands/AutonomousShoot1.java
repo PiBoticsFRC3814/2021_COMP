@@ -79,6 +79,7 @@ public class AutonomousShoot1 extends CommandBase {
     SmartDashboard.putNumber("Timer", shootDelay.get());
     m_LimeLight.onLight();
     m_LimeLight.displayOutput();
+    m_Shooter.WheelsOn(Constants.MotorSpeed1);
     
       if (m_LimeLight.x > 4)
       {
@@ -163,10 +164,9 @@ public class AutonomousShoot1 extends CommandBase {
 
     if (m_LimeLight.position1 && !shot)
       {
-        m_Shooter.WheelsOn(Constants.MotorSpeed1);
-        shootDelay.start();
-        if (shootDelay.get() > 1.0)
-        {
+       shootDelay.start();
+       if (shootDelay.get()>0.5)
+       {
           m_Intake.intakeOn();;
           Timer.delay(0.15);
           m_Intake.intakeOff();
@@ -174,7 +174,7 @@ public class AutonomousShoot1 extends CommandBase {
           counter++;
           SmartDashboard.putNumber("Shotcount", counter);
           shot = true;
-        }
+       }
       }
   }
 
