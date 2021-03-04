@@ -17,7 +17,7 @@ import frc.robot.subsystems.IntakeMaintain;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Shooter;
 
-public class AutonomousShoot1 extends CommandBase {
+public class AutonomousShoot4 extends CommandBase {
   /**
    * Creates a new AutoShoot.
    */
@@ -41,7 +41,7 @@ public class AutonomousShoot1 extends CommandBase {
   private Boolean isXPos = false;
   private static Boolean shot = false;
 
-  public AutonomousShoot1(Limelight limelight, Shooter shooter, DriveTrain drive, IntakeMaintain intake, ADIS16448_IMU gyroscope) {
+  public AutonomousShoot4(Limelight limelight, Shooter shooter, DriveTrain drive, IntakeMaintain intake, ADIS16448_IMU gyroscope) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_LimeLight = limelight;
     m_Shooter = shooter;
@@ -79,7 +79,7 @@ public class AutonomousShoot1 extends CommandBase {
     SmartDashboard.putNumber("Timer", shootDelay.get());
     m_LimeLight.onLight();
     m_LimeLight.displayOutput();
-    m_Shooter.WheelsOn(Constants.MotorSpeed1);
+    m_Shooter.WheelsOn(Constants.MotorSpeed4);
     
       if (m_LimeLight.x > 4)
       {
@@ -96,12 +96,12 @@ public class AutonomousShoot1 extends CommandBase {
         xs = 0;
         isXPos = true;
       }
-      if (m_LimeLight.y < Constants.Z1Lowest)
+      if (m_LimeLight.y < Constants.Z4Lowest)
       {
         ys = 0.3;
         isYPos = false;
       }
-      else if (m_LimeLight.y > Constants.Z1Farthest)
+      else if (m_LimeLight.y > Constants.Z4Farthest)
       {
         if (m_LimeLight.y <= 90)
         {
@@ -155,18 +155,16 @@ public class AutonomousShoot1 extends CommandBase {
   
       if (position >= 25)
       {
-        m_LimeLight.position1 = true;
+        m_LimeLight.position4 = true;
         DriverStation.reportWarning("I made it to my position", false);
       }
 
       m_PiboticsDrive.Drive(-ys, -xs, zs, gyro.getGyroAngleX());
   
 
-    if (m_LimeLight.position1 && !shot)
+    if (m_LimeLight.position4 && !shot)
       {
-       shootDelay.start();
-       if (shootDelay.get()>0.5)
-       {
+                
           m_Intake.intakeOn();;
           Timer.delay(0.15);
           m_Intake.intakeOff();
@@ -177,7 +175,6 @@ public class AutonomousShoot1 extends CommandBase {
           {
             shot = true;
           }
-       }
       }
   }
 

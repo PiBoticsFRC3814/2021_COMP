@@ -171,8 +171,10 @@ public class AutonomousShoot2 extends CommandBase {
           shootDelay.reset();
           counter++;
           SmartDashboard.putNumber("Shotcount", counter);
-          shot = true;
-        
+          if (counter >= 3)
+          {
+            shot = true;
+          }
       }
   }
 
@@ -195,8 +197,13 @@ public class AutonomousShoot2 extends CommandBase {
       m_Intake.intakeOff();
       m_Shooter.WheelsOff();
       m_LimeLight.offLight();
+      isXPos = false;
       isYPos = false;
       isZPos = false;
+      shot = false;
+      counter = 0;
+      timeOut = 0;
+      position = 0;
       return true;
     }
   }

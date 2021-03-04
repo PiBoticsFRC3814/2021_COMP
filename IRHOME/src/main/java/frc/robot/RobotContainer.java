@@ -101,6 +101,9 @@ public class RobotContainer {
 
     UpperIntake.whenPressed(new UpperIntakeOn(m_IntakeMaintain));
     UpperIntake.whenReleased(new UpperIntakeOff(m_IntakeMaintain));
+    
+    Outtake.whenPressed(new IntakeReverse(m_IntakeMaintain));
+    Outtake.whenReleased(new UpperIntakeOff(m_IntakeMaintain));
 
     Shooter.whenPressed(new Shoot(m_shooter,m_LimeLight));
     Shooter.whenReleased(new StopShoot(m_shooter,m_LimeLight));
@@ -117,20 +120,17 @@ public class RobotContainer {
     LimelightZ4.whenPressed(new Z4Limelight(m_piboticsdrive,m_LimeLight,gyro));
     LimelightZ4.whenReleased(new GetLimelight(m_LimeLight));
 
-    LimelightZ1Network.whenPressed(new Z1Limelight(m_piboticsdrive,m_LimeLight,gyro));
+    LimelightZ1Network.whenPressed(new AutonomousShoot1(m_LimeLight, m_shooter, m_piboticsdrive, m_IntakeMaintain, gyro));
     LimelightZ1Network.whenReleased(new GetLimelight(m_LimeLight));
 
-    LimelightZ2Network.whenPressed(new Z2Limelight(m_piboticsdrive,m_LimeLight,gyro));
+    LimelightZ2Network.whenPressed(new AutonomousShoot2(m_LimeLight, m_shooter, m_piboticsdrive, m_IntakeMaintain, gyro));
     LimelightZ2Network.whenReleased(new GetLimelight(m_LimeLight));
 
-    LimelightZ3Network.whenPressed(new Z3Limelight(m_piboticsdrive,m_LimeLight,gyro));
+    LimelightZ3Network.whenPressed(new AutonomousShoot3(m_LimeLight, m_shooter, m_piboticsdrive, m_IntakeMaintain, gyro));
     LimelightZ3Network.whenReleased(new GetLimelight(m_LimeLight));
 
-    LimelightZ4Network.whenPressed(new Z4Limelight(m_piboticsdrive,m_LimeLight,gyro));
+    LimelightZ4Network.whenPressed(new AutonomousShoot4(m_LimeLight, m_shooter, m_piboticsdrive, m_IntakeMaintain, gyro));
     LimelightZ4Network.whenReleased(new GetLimelight(m_LimeLight));
-
-    Outtake.whenPressed(new IntakeReverse(m_IntakeMaintain));
-    Outtake.whenReleased(new UpperIntakeOff(m_IntakeMaintain));
     
 
     
