@@ -7,6 +7,7 @@ package frc.robot;
 import com.analog.adis16448.frc.ADIS16448_IMU;
 
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.*;
@@ -16,8 +17,6 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.NetworkButton;
-import edu.wpi.first.wpilibj.Joystick;
-
 
 
 
@@ -41,6 +40,7 @@ public class RobotContainer {
   private final IntakeMaintain m_IntakeMaintain = new IntakeMaintain();
   private final Limelight m_LimeLight = new Limelight();
   private final ControlPanel m_ControlPanel = new ControlPanel();
+  public final RecordJoystick m_RecordJoystick = new RecordJoystick();
 
   private final Joystick driverStick = new Joystick(Constants.oi_Driver);
 
@@ -50,7 +50,7 @@ public class RobotContainer {
    * The container for the robot.  Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
-    m_piboticsdrive.setDefaultCommand(new PiboticsDrive(() -> driverStick.getY(), () -> driverStick.getX(), () -> driverStick.getZ(), () -> gyro.getGyroAngleX(), m_piboticsdrive));
+    m_piboticsdrive.setDefaultCommand(new PiboticsDrive(() -> driverStick.getY(), () -> driverStick.getX(), () -> driverStick.getZ(), () -> gyro.getGyroAngleX(), m_piboticsdrive, m_RecordJoystick));
     m_LimeLight.setDefaultCommand(new GetLimelight(m_LimeLight));
     m_ControlPanel.setDefaultCommand(new GrabColorData(m_ControlPanel));
     SmartDashboard.putBoolean("GyroReset", false);
