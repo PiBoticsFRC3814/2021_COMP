@@ -80,4 +80,6 @@ public final class Constants {
     public static final double Z4Lowest = 270;
     public static final double Z4Farthest = 282;
     public static final double MotorSpeed4 = 1.0;
+//auton constants
+    public static final String Auton1 = "Auton1.txt";
 }

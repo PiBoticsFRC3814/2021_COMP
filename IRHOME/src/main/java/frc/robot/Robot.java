@@ -66,7 +66,11 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void disabledInit() {
-
+    try {
+      m_robotContainer.m_RecordJoystick.WriteTimeCSV();
+    } catch (IOException e) {
+      DriverStation.reportWarning("Can't Find csv", false);
+    }
   }
 
   @Override
@@ -96,6 +100,7 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void autonomousPeriodic() {
+    
   }
 
   @Override

@@ -6,11 +6,13 @@ package frc.robot.subsystems;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.sql.Driver;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
@@ -20,12 +22,50 @@ public class RecordJoystick extends SubsystemBase {
   public RecordJoystick() {
   }
 
-  public void ReadCSV() {
+  public double[][] ReadCSV() throws java.io.IOException {
+    boolean EOF = false;
+    int i = 0;
+    String data;
+    String[] arrayOfData;
+    double x,y,z;
+    double[][] finalData = new double[3][100000];
+    FileReader csvReader = new FileReader("/U/Auton1.txt");
+    BufferedReader bufferedReader = new BufferedReader(csvReader); 
 
+    while(!EOF)
+    {
+      data = bufferedReader.readLine();
+
+      if(!data.equals(null))
+      {
+        arrayOfData = data.split(",", 3);
+
+        x = Double.parseDouble(arrayOfData[0]);
+        y = Double.parseDouble(arrayOfData[1]);
+        z = Double.parseDouble(arrayOfData[2]);
+
+        DriverStation.reportError(x + " " + y + " " + z, false);
+
+        
+        finalData[0][i] = x;
+        finalData[1][i] = y;
+        finalData[2][i] = z;
+        DriverStation.reportError(data, false);
+        i++;
+      }
+      else
+      {
+        EOF = true;
+      }
+    }
+    DriverStation.reportError("EOF", false);
+
+    bufferedReader.close();
+    return finalData;
   }
 
   public void WriteCSV(double x, double y, double z) throws java.io.IOException {
-    FileWriter csvWriter = new FileWriter("/home/lvuser/JoystickData.csv", true);
+    FileWriter csvWriter = new FileWriter("/U/JoystickData.txt", true);
 
     csvWriter.append(Double.toString(x));
     csvWriter.append(",");
@@ -39,7 +79,7 @@ public class RecordJoystick extends SubsystemBase {
   }
 
   public void WriteTimeCSV() throws IOException {
-    FileWriter csvWriter = new FileWriter("/home/lvuser/JoystickData.csv", true);
+    FileWriter csvWriter = new FileWriter("/U/JoystickData.txt", true);
 
     DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");  
     LocalDateTime now = LocalDateTime.now();  
