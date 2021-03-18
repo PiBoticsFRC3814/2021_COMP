@@ -45,6 +45,9 @@ public class Z1Limelight extends CommandBase {
     timeOut = 0;
     position = 0;
     m_LimeLight.position1 = false;
+    m_LimeLight.position2 = false;
+    m_LimeLight.position3 = false;
+    m_LimeLight.position4 = false;
   }
 
   // Called every time the scheduler runs while the command is scheduled.

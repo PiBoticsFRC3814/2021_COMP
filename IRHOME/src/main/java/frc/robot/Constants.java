@@ -66,7 +66,7 @@ public final class Constants {
 
     //z1 firing range
     public static final double Z1Lowest = 55;
-    public static final double Z1Farthest = 62;
+    public static final double Z1Farthest = 67;
     public static final double MotorSpeed1 = 1.0;
     //z2 firing range
     public static final double Z2Lowest = 118;
@@ -74,7 +74,7 @@ public final class Constants {
     public static final double MotorSpeed2 = 0.6;
     //z3 firing range
     public static final double Z3Lowest = 183;
-    public static final double Z3Farthest = 195;
+    public static final double Z3Farthest = 210;
     public static final double MotorSpeed3 = 0.69;
     //z4 firing range
     public static final double Z4Lowest = 270;
