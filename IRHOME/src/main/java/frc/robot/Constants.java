@@ -16,7 +16,7 @@ public final class Constants {
     //drive paramters
     public static final double deadzoneX = 0.1;
     public static final double deadzoneY = 0.1;
-    public static final double deadzoneZ = 0.1;
+    public static final double deadzoneZ = 0.2;
     //talon IDs
     public static final int frontIntake = 10;
     public static final int rearIntake = 11;
@@ -81,5 +81,7 @@ public final class Constants {
     public static final double Z4Farthest = 282;
     public static final double MotorSpeed4 = 1.0;
 //auton constants
+    public static final int ReadArrayDim1 = 3;
+    public static final int ReadArrayDim2 = 1000;
     public static final String Auton1 = "Auton1.txt";
 }

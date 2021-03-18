@@ -187,7 +187,7 @@ public class AutonomousShoot2 extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if(counter < 1)
+    if(!shot)
     {
       return false;
     }
@@ -204,6 +204,7 @@ public class AutonomousShoot2 extends CommandBase {
       counter = 0;
       timeOut = 0;
       position = 0;
+      SmartDashboard.putBoolean("Move Yellow", false);
       return true;
     }
   }

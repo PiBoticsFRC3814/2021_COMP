@@ -6,19 +6,22 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.RecordJoystick;
 
 public class AutonTest extends CommandBase {
   /** Creates a new AutonTest. */
-  private final DriveTrain m_drivetrain;
+  private final DriveTrain m_drive;
   private final RecordJoystick m_recordjoystick;
-  private double[][] data = new double [3][1000000];
+  private double[][] data = new double [Constants.ReadArrayDim1][Constants.ReadArrayDim2];
   private int i = 0;
   public AutonTest(DriveTrain driveTrain, RecordJoystick recordJoystick) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_recordjoystick = recordJoystick;
-    m_drivetrain = driveTrain;
+    m_drive = driveTrain;
+    addRequirements(m_drive);
+    addRequirements(m_recordjoystick);
   }
 
   // Called when the command is initially scheduled.
@@ -27,18 +30,17 @@ public class AutonTest extends CommandBase {
     try {
       data = m_recordjoystick.ReadCSV();
     } catch (Exception e) {
-      DriverStation.reportError("Failed to grab data", false);
+      DriverStation.reportError(e.toString(), false);
     }
+    i = 0;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    try {
-      m_drivetrain.Drive(data[1][i], data[0][i], data[2][i], 0);
-    } catch (Exception e) {
-      DriverStation.reportError(data[0][i] + " " + data[1][i] + " " + data[2][i], false);
-    }
+    m_drive.Drive(data[1][i], data[0][i], data[2][i], 0);
+    //DriverStation.reportError(data[1][i] + " " + data[0][i] + " " + data[2][i], false);
+    
     i++;
   }
 
@@ -49,13 +51,6 @@ public class AutonTest extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if(i >= data[0].length)
-    {
-      return true;
-    }
-    else
-    {
       return false;
-    }
   }
 }

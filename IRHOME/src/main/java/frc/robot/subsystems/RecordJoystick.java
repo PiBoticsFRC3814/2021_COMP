@@ -28,7 +28,7 @@ public class RecordJoystick extends SubsystemBase {
     String data;
     String[] arrayOfData;
     double x,y,z;
-    double[][] finalData = new double[3][100000];
+    double[][] finalData = new double[Constants.ReadArrayDim1][Constants.ReadArrayDim2];
     FileReader csvReader = new FileReader("/U/Auton1.txt");
     BufferedReader bufferedReader = new BufferedReader(csvReader); 
 
@@ -36,7 +36,7 @@ public class RecordJoystick extends SubsystemBase {
     {
       data = bufferedReader.readLine();
 
-      if(!data.equals(null))
+      if(data != null && !data.isEmpty() && !data.isBlank())
       {
         arrayOfData = data.split(",", 3);
 
@@ -44,13 +44,12 @@ public class RecordJoystick extends SubsystemBase {
         y = Double.parseDouble(arrayOfData[1]);
         z = Double.parseDouble(arrayOfData[2]);
 
-        DriverStation.reportError(x + " " + y + " " + z, false);
+        DriverStation.reportError(data, false);
 
-        
+
         finalData[0][i] = x;
         finalData[1][i] = y;
         finalData[2][i] = z;
-        DriverStation.reportError(data, false);
         i++;
       }
       else
