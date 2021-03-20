@@ -38,7 +38,9 @@ public class AutonTest extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_drive.Drive(data[1][i], data[0][i], data[2][i], 0);
+    //m_drive.Drive(data[1][i], data[0][i], data[2][i], 0);
+    m_drive.Drive(-data[1][i], -data[0][i], 0, 0);
+
     //DriverStation.reportError(data[1][i] + " " + data[0][i] + " " + data[2][i], false);
     
     i++;

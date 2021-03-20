@@ -87,7 +87,7 @@ public class PiboticsDrive extends CommandBase {
     } else
       z = 0.0;
 
-    m_drivetrain.Drive(-y, -x, z, m_gyro.getAsDouble());
+    m_drivetrain.Drive(-y, -x, 0, m_gyro.getAsDouble());
     SmartDashboard.putNumber("Gyro ADIS", m_gyro.getAsDouble());
 
     try {
