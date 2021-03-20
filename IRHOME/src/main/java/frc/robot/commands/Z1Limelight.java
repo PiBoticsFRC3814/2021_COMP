@@ -61,12 +61,12 @@ public class Z1Limelight extends CommandBase {
     m_LimeLight.displayOutput();
     SmartDashboard.putBoolean("Target Acquired", m_LimeLight.isValidTarget());
 
-    if (m_LimeLight.x > 4)
+    if (m_LimeLight.x > 5)
     {
       xs = 0.3;
       isXPos = false;
     }
-    else if (m_LimeLight.x < -4)
+    else if (m_LimeLight.x < -5)
     {
       xs = -0.3;
       isXPos = false;

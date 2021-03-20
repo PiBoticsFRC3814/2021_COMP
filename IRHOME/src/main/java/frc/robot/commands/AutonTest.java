@@ -14,12 +14,14 @@ public class AutonTest extends CommandBase {
   /** Creates a new AutonTest. */
   private final DriveTrain m_drive;
   private final RecordJoystick m_recordjoystick;
+  privage final ADIS16448_IMU gyro;
   private double[][] data = new double [Constants.ReadArrayDim1][Constants.ReadArrayDim2];
   private int i = 0;
-  public AutonTest(DriveTrain driveTrain, RecordJoystick recordJoystick) {
+  public AutonTest(DriveTrain driveTrain, RecordJoystick recordJoystick, ADIS16448_IMU gyroscope) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_recordjoystick = recordJoystick;
     m_drive = driveTrain;
+    gyro = gyroscope;
     addRequirements(m_drive);
     addRequirements(m_recordjoystick);
   }
@@ -38,8 +40,7 @@ public class AutonTest extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    //m_drive.Drive(data[1][i], data[0][i], data[2][i], 0);
-    m_drive.Drive(-data[1][i], -data[0][i], 0, 0);
+    m_drive.Drive(data[1][i], data[0][i], data[2][i], gyro.getGyroAngleX());
 
     //DriverStation.reportError(data[1][i] + " " + data[0][i] + " " + data[2][i], false);
     

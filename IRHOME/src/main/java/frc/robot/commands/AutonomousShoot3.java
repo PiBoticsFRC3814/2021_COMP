@@ -66,6 +66,7 @@ public class AutonomousShoot3 extends CommandBase {
     m_LimeLight.position1 = false;
     timeOut = 0;
     position = 0;
+    counter = 0;
     m_LimeLight.position2 = false;
     m_LimeLight.position3 = false;
     m_LimeLight.position4 = false;
@@ -164,17 +165,19 @@ public class AutonomousShoot3 extends CommandBase {
 
     if (m_LimeLight.position1 && !shot)
       {
-
-          m_Intake.intakeOn();;
-          Timer.delay(0.5);
-          m_Intake.intakeOff();
-          shootDelay.reset();
-          counter++;
-          SmartDashboard.putNumber("Shotcount", counter);
-          if(counter >= 3)
-          {
-            shot = true;
-          }
+        shootDelay.start();
+        if (shootDelay.get()>0.5)
+        {
+           m_Intake.intakeOn();;
+           Timer.delay(0.15);
+           m_Intake.intakeOff();
+           shootDelay.reset();
+           counter++;
+           SmartDashboard.putNumber("Shotcount", counter);
+           if (counter >= 3)
+           {
+             shot = true;
+           }
       }
   }
 

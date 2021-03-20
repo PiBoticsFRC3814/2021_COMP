@@ -66,6 +66,7 @@ public class AutonomousShoot1 extends CommandBase {
     m_LimeLight.position1 = false;
     timeOut = 0;
     position = 0;
+    counter = 0;
     m_LimeLight.position2 = false;
     m_LimeLight.position3 = false;
     m_LimeLight.position4 = false;
@@ -81,12 +82,12 @@ public class AutonomousShoot1 extends CommandBase {
     m_LimeLight.displayOutput();
     m_Shooter.WheelsOn(Constants.MotorSpeed1);
     
-      if (m_LimeLight.x > 4)
+      if (m_LimeLight.x > 5)
       {
         xs = 0.3;
         isXPos = false;
       }
-      else if (m_LimeLight.x < -4)
+      else if (m_LimeLight.x < -5)
       {
         xs = -0.3;
         isXPos = false;
