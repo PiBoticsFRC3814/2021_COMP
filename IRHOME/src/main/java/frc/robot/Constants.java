@@ -82,6 +82,6 @@ public final class Constants {
     public static final double MotorSpeed4 = 1.0;
 //auton constants
     public static final int ReadArrayDim1 = 3;
-    public static final int ReadArrayDim2 = 1000;
+    public static final int ReadArrayDim2 = 10000;
     public static final String Auton1 = "Auton1.txt";
 }

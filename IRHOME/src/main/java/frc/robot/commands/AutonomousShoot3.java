@@ -99,12 +99,19 @@ public class AutonomousShoot3 extends CommandBase {
       }
       if (m_LimeLight.y < Constants.Z3Lowest)
       {
-        ys = 0.3;
+        if (m_LimeLight.y >= 170)
+        {
+          ys = 0.125;
+        }
+        else
+        {
+          ys = 0.3;
+        }
         isYPos = false;
       }
       else if (m_LimeLight.y > Constants.Z3Farthest)
       {
-        if (m_LimeLight.y <= 90)
+        if (m_LimeLight.y <= 220)
         {
           ys = -0.125;
         }
@@ -154,7 +161,7 @@ public class AutonomousShoot3 extends CommandBase {
         timeOut = 0;
       }
   
-      if (position >= 25)
+      if (position >= 50)
       {
         m_LimeLight.position1 = true;
         DriverStation.reportWarning("I made it to my position", false);
@@ -166,7 +173,7 @@ public class AutonomousShoot3 extends CommandBase {
     if (m_LimeLight.position1 && !shot)
       {
         shootDelay.start();
-        if (shootDelay.get()>0.5)
+        /*if (shootDelay.get()>0.5)
         {
            m_Intake.intakeOn();;
            Timer.delay(0.15);
@@ -178,6 +185,16 @@ public class AutonomousShoot3 extends CommandBase {
            {
              shot = true;
            }
+          }*/
+          if(shootDelay.get() < 1.0)
+          {
+            m_Intake.intakeOn();
+          }
+          else
+          {
+            shot = true;
+            m_Intake.intakeOff();
+          }
       }
   }
 
@@ -207,6 +224,8 @@ public class AutonomousShoot3 extends CommandBase {
       counter = 0;
       timeOut = 0;
       position = 0;
+      shootDelay.stop();
+      shootDelay.reset();
       SmartDashboard.putBoolean("Move Blue", false);
       return true;
     }

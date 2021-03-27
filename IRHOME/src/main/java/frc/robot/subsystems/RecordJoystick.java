@@ -29,7 +29,7 @@ public class RecordJoystick extends SubsystemBase {
     String[] arrayOfData;
     double x,y,z;
     double[][] finalData = new double[Constants.ReadArrayDim1][Constants.ReadArrayDim2];
-    FileReader csvReader = new FileReader("/U/Auton1.txt");
+    FileReader csvReader = new FileReader("/U/Slolom.txt");
     BufferedReader bufferedReader = new BufferedReader(csvReader); 
 
     while(!EOF)

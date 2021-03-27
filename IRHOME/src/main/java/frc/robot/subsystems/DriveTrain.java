@@ -4,6 +4,7 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.wpilibj.DriverStation;
@@ -35,6 +36,20 @@ public class DriveTrain extends SubsystemBase {
     piboticsdrive.driveCartesian(-x, y, z, gyro);
     value = rr.getMotorOutputVoltage();
     //DriverStation.reportError(value + " " + y, false);
+  }
+
+  public void Brake(){
+    lf.setNeutralMode(NeutralMode.Brake);
+    lr.setNeutralMode(NeutralMode.Brake);
+    rf.setNeutralMode(NeutralMode.Brake);
+    rr.setNeutralMode(NeutralMode.Brake);
+  }
+
+  public void Coast(){
+    lf.setNeutralMode(NeutralMode.Coast);
+    lr.setNeutralMode(NeutralMode.Coast);
+    rf.setNeutralMode(NeutralMode.Coast);
+    rr.setNeutralMode(NeutralMode.Coast);
   }
 
   @Override

@@ -12,7 +12,6 @@ import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.RecordJoystick;
 
 import java.io.IOException;
-import java.sql.Driver;
 import java.util.function.DoubleSupplier;
 
 public class PiboticsDrive extends CommandBase {
@@ -87,7 +86,8 @@ public class PiboticsDrive extends CommandBase {
     } else
       z = 0.0;
 
-    m_drivetrain.Drive(-y, -x, z, m_gyro.getAsDouble());
+    //m_drivetrain.Drive(-y, 0.0, z, 0.0);
+    m_drivetrain.Drive(-y, -x, z, m_gyro.getAsDouble()-90);
     SmartDashboard.putNumber("Gyro ADIS", m_gyro.getAsDouble());
 
     try {

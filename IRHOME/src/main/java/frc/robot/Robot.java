@@ -77,6 +77,8 @@ public class Robot extends TimedRobot {
   public void disabledPeriodic() {
     m_Limelight.offLight();
     m_robotContainer.gyro.reset();
+    m_robotContainer.m_piboticsdrive.Coast();
+
 
   }
 
@@ -114,6 +116,7 @@ public class Robot extends TimedRobot {
       m_autonomousCommand.cancel();
     }
     m_robotContainer.gyro.reset();
+    m_robotContainer.m_piboticsdrive.Coast();
     try {
       m_robotContainer.m_RecordJoystick.WriteTimeCSV();
     } catch (IOException e) {

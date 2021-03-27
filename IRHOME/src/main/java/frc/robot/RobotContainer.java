@@ -35,7 +35,7 @@ public class RobotContainer {
   private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
   private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
 
-  private final DriveTrain m_piboticsdrive = new DriveTrain();
+  public final DriveTrain m_piboticsdrive = new DriveTrain();
   private final Shooter m_shooter = new Shooter();
   private final IntakeMaintain m_IntakeMaintain = new IntakeMaintain();
   private final Limelight m_LimeLight = new Limelight();
@@ -45,7 +45,7 @@ public class RobotContainer {
   private final Joystick driverStick = new Joystick(Constants.oi_Driver);
 
   ///private final CommandBase m_autonomousCommand = new Autonomous1(m_piboticsdrive,m_LimeLight,m_shooter,m_IntakeMaintain);
-  private final CommandBase m_autonomousCommand = new AutonTest(m_piboticsdrive,m_RecordJoystick);
+  private final CommandBase m_autonomousCommand = new Slolom(m_piboticsdrive,gyro);
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
@@ -121,16 +121,16 @@ public class RobotContainer {
     LimelightZ4.whenPressed(new Z4Limelight(m_piboticsdrive,m_LimeLight,gyro));
     LimelightZ4.whenReleased(new GetLimelight(m_LimeLight));
 
-    LimelightZ1Network.whenPressed(new AutonomousShoot1(m_LimeLight, m_shooter, m_piboticsdrive, m_IntakeMaintain, gyro));
+    LimelightZ1Network.whenPressed(new Z1Limelight(m_piboticsdrive, m_LimeLight, gyro));
     LimelightZ1Network.whenReleased(new GetLimelight(m_LimeLight));
 
-    LimelightZ2Network.whenPressed(new AutonomousShoot2(m_LimeLight, m_shooter, m_piboticsdrive, m_IntakeMaintain, gyro));
+    LimelightZ2Network.whenPressed(new Z2Limelight(m_piboticsdrive, m_LimeLight, gyro));
     LimelightZ2Network.whenReleased(new GetLimelight(m_LimeLight));
 
-    LimelightZ3Network.whenPressed(new AutonomousShoot3(m_LimeLight, m_shooter, m_piboticsdrive, m_IntakeMaintain, gyro));
+    LimelightZ3Network.whenPressed(new Z3Limelight(m_piboticsdrive, m_LimeLight, gyro));
     LimelightZ3Network.whenReleased(new GetLimelight(m_LimeLight));
 
-    LimelightZ4Network.whenPressed(new AutonomousShoot4(m_LimeLight, m_shooter, m_piboticsdrive, m_IntakeMaintain, gyro));
+    LimelightZ4Network.whenPressed(new Z4Limelight(m_piboticsdrive, m_LimeLight, gyro));
     LimelightZ4Network.whenReleased(new GetLimelight(m_LimeLight));
     
 

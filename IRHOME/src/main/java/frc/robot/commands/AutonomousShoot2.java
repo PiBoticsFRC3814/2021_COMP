@@ -178,6 +178,7 @@ public class AutonomousShoot2 extends CommandBase {
            {
              shot = true;
            }
+          }
       }
   }
 
