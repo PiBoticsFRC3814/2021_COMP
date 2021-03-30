@@ -17,26 +17,28 @@ public class Slolom extends SequentialCommandGroup {
   public Slolom(DriveTrain driveTrain, ADIS16448_IMU gyroscope) {
     // Add your commands in the addCommands() call, e.g.
     // addCommands(new FooCommand(), new BarCommand());
+    //BATTERY 6
     addCommands(
+      new GyroReset(gyroscope),
       new TimedForward(driveTrain, gyroscope, 1.4, 0.0, 0.3),
       new AngleTurn(driveTrain, gyroscope, 90.0),
-      new TimedForward(driveTrain, gyroscope, 2.33, 90.0, 0.3),
+      new TimedForward(driveTrain, gyroscope, 2.0, 90.0, 0.3),
       new AngleTurn(driveTrain, gyroscope, 0.0),
-      new TimedForward(driveTrain, gyroscope, 4.0, 0.0, 0.3),
+      new TimedForward(driveTrain, gyroscope, 4.1, 0.0, 0.3),
       new AngleTurn(driveTrain, gyroscope, -90.0),
-      new TimedForward(driveTrain, gyroscope, 2.0, -90.0, 0.3),
+      new TimedForward(driveTrain, gyroscope, 2.1, -90.0, 0.3),
       new AngleTurn(driveTrain, gyroscope, 0.0),
-      new TimedForward(driveTrain, gyroscope, 1.8, 0.0, 0.3),
+      new TimedForward(driveTrain, gyroscope, 2.0, 0.0, 0.3),
       new AngleTurn(driveTrain, gyroscope, 90.0),
-      new TimedForward(driveTrain, gyroscope, 1.8, 90.0, 0.3),
+      new TimedForward(driveTrain, gyroscope, 2.2, 90.0, 0.3),
       new AngleTurn(driveTrain, gyroscope, 180.0),
-      new TimedForward(driveTrain, gyroscope, 1.8, 180.0, 0.3),
+      new TimedForward(driveTrain, gyroscope, 1.7, 180.0, 0.3),
       new AngleTurn(driveTrain, gyroscope, 270.0),
-      new TimedForward(driveTrain, gyroscope, 2.0, 270.0, 0.3),
+      new TimedForward(driveTrain, gyroscope, 2.2, 270.0, 0.3),
       new AngleTurn(driveTrain, gyroscope, 180.0),
-      new TimedForward(driveTrain, gyroscope, 4.0, 180.0, 0.3),
+      new TimedForward(driveTrain, gyroscope, 4.1, 180.0, 0.3),
       new AngleTurn(driveTrain, gyroscope, 90.0),
-      new TimedForward(driveTrain, gyroscope, 1.4, 90.0, 0.3),
+      new TimedForward(driveTrain, gyroscope, 1.7, 90.0, 0.3),
       new AngleTurn(driveTrain, gyroscope, 180.0),
       new TimedForward(driveTrain, gyroscope, 1.8, 180.0, 0.3)
     );
