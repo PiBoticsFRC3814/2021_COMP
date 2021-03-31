@@ -75,11 +75,11 @@ public final class Constants {
     //z3 firing range
     public static final double Z3Lowest = 183;
     public static final double Z3Farthest = 210;
-    public static final double MotorSpeed3 = 0.69;
+    public static final double MotorSpeed3 = 0.67;
     //z4 firing range
     public static final double Z4Lowest = 270;
     public static final double Z4Farthest = 282;
-    public static final double MotorSpeed4 = 1.0;
+    public static final double MotorSpeed4 = 0.98;
 //auton constants
     public static final int ReadArrayDim1 = 3;
     public static final int ReadArrayDim2 = 10000;

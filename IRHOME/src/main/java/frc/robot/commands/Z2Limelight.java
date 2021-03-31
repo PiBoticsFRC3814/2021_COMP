@@ -26,6 +26,7 @@ public class Z2Limelight extends CommandBase {
   private Boolean isXPos = false;
   private Boolean isYPos = false;
   private Boolean isZPos = false;
+  private Boolean POS = false;
 
 
   public Z2Limelight(DriveTrain piboticsdrive, Limelight LimeLight, ADIS16448_IMU gyroscope) {
@@ -51,18 +52,19 @@ public class Z2Limelight extends CommandBase {
     m_LimeLight.position1 = false;
     m_LimeLight.position3 = false;
     m_LimeLight.position4 = false;
+    m_LimeLight.position2 = true;
     m_LimeLight.onLight();
     m_LimeLight.displayOutput();
     SmartDashboard.putBoolean("Target Acquired", m_LimeLight.isValidTarget());
 
     if (m_LimeLight.x > 2)
     {
-      xs = 0.3;
+      xs = 0.5;
       isXPos = false;
     }
     else if (m_LimeLight.x < -2)
     {
-      xs = -0.3;
+      xs = -0.5;
       isXPos = false;
     }
     else
@@ -122,7 +124,7 @@ public class Z2Limelight extends CommandBase {
 
     if (position >= 25)
     {
-      m_LimeLight.position2 = true;
+      POS = true;
       DriverStation.reportWarning("I made it to my position", false);
     }
     m_PiboticsDrive.Drive(-ys, -xs, zs, gyro.getGyroAngleX());
@@ -135,13 +137,14 @@ public class Z2Limelight extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if (timeOut > 1000 || m_LimeLight.position2)
+    if (timeOut > 1000 || POS)
     {
       m_PiboticsDrive.Drive(0.0, 0.0, 0.0, 0.0);
       m_LimeLight.offLight();
       isXPos = false;
       isYPos = false;
       isZPos = false;
+      POS = false;
       timeOut = 0;
       position = 0;
       SmartDashboard.putBoolean("Move Yellow", false);
