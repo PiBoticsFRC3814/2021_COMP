@@ -28,7 +28,6 @@ public class AngleTurn extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_drive.Brake();
     done = false;
   }
 
@@ -45,7 +44,7 @@ public class AngleTurn extends CommandBase {
       z = 0.0;
       done = true;
     }
-    m_drive.Drive(0.0,0.0,-z,0.0);
+    m_drive.Drive(0.0, -z, false, 0.0, 0.0);
 
   }
 
@@ -58,7 +57,7 @@ public class AngleTurn extends CommandBase {
   public boolean isFinished() {
     if (done){
       done = false;
-      m_drive.Drive(0.0,0.0,0.0,0.0);
+      m_drive.Drive(0.0, 0.0, false, 0.0, 0.0);
       return true;
     }
     else{

@@ -22,12 +22,11 @@ public class Z1Limelight extends CommandBase {
   DriveTrain m_PiboticsDrive;
   ADIS16448_IMU gyro;
 
-  private static double xs, ys, zs;
+  private static double ys, zs;
   private static int timeOut = 0;
   private static int position = 0;
 
   private Boolean isYPos = false;
-  private Boolean isZPos = false;
   private Boolean isXPos = false;
   private Boolean POS = false;
 
@@ -45,19 +44,11 @@ public class Z1Limelight extends CommandBase {
   public void initialize() {
     timeOut = 0;
     position = 0;
-    m_LimeLight.position1 = false;
-    m_LimeLight.position2 = false;
-    m_LimeLight.position3 = false;
-    m_LimeLight.position4 = false;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_LimeLight.position2 = false;
-    m_LimeLight.position3 = false;
-    m_LimeLight.position4 = false;
-    m_LimeLight.position1 = true;
 
     m_LimeLight.onLight();
     m_LimeLight.displayOutput();
@@ -65,17 +56,17 @@ public class Z1Limelight extends CommandBase {
 
     if (m_LimeLight.x > 5)
     {
-      xs = 0.5;
+      zs = 0.5;
       isXPos = false;
     }
     else if (m_LimeLight.x < -5)
     {
-      xs = -0.5;
+      zs = -0.5;
       isXPos = false;
     }
     else
     {
-      xs = 0;
+      zs = 0;
       isXPos = true;
     }
     if (m_LimeLight.y < Constants.Z1Lowest)
@@ -100,23 +91,8 @@ public class Z1Limelight extends CommandBase {
       ys = 0;
       isYPos = true;
     }
-    if (gyro.getGyroAngleX() < -1)
-    {
-      zs = -0.1;
-      isZPos = false;
-    }
-    else if (gyro.getGyroAngleX() > 1)
-    {
-      zs = 0.1;
-      isZPos = false;
-    }
-    else
-    {
-      zs = 0;
-      isZPos = true;
-    }
 
-    if (isXPos && isYPos && isZPos)
+    if (isXPos && isYPos)
     {
       position++;
       DriverStation.reportWarning("I made it to position once", false);
@@ -140,7 +116,7 @@ public class Z1Limelight extends CommandBase {
       POS = true;
       DriverStation.reportWarning("I made it to my position", false);
     }
-    m_PiboticsDrive.Drive(-ys, -xs, zs, gyro.getGyroAngleX());
+    m_PiboticsDrive.Drive(-ys, -zs, false, 0.0, 0.0);
 }
 
   // Called once the command ends or is interrupted.
@@ -153,21 +129,17 @@ public class Z1Limelight extends CommandBase {
   public boolean isFinished() {
     if (timeOut > 1000 || POS)
     {
-      m_PiboticsDrive.Drive(0.0, 0.0, 0.0, 0.0);
+      m_PiboticsDrive.Drive(0.0, 0.0, false, 0.0, 0.0);
       m_LimeLight.offLight();
       isXPos = false;
       isYPos = false;
-      isZPos = false;
       POS = false;
       timeOut = 0;
       position = 0;
-      SmartDashboard.putBoolean("Move Green", false);
-      DriverStation.reportWarning("Quit Command", false);
       return true;
     }
     else
     {
-
       return false;
     }
   }

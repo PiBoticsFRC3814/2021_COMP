@@ -4,52 +4,38 @@
 
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.NeutralMode;
+
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.drive.MecanumDrive;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class DriveTrain extends SubsystemBase {
-  /**
-   * Creates a new DriveTrain.
-   */
-  private static final WPI_TalonSRX lf = new WPI_TalonSRX(Constants.lf);
-  private static final WPI_TalonSRX lr = new WPI_TalonSRX(Constants.lr);
-  private static final WPI_TalonSRX rf = new WPI_TalonSRX(Constants.rf);
-  private static final WPI_TalonSRX rr = new WPI_TalonSRX(Constants.rr);
-  double value;
+  /** Creates a new DriveTrain. */
 
+  public static final WPI_TalonSRX leftDrive = new WPI_TalonSRX(Constants.leftDrive);
+  public static final WPI_TalonSRX rightDrive = new WPI_TalonSRX(Constants.rightDrive);
+  public static final DifferentialDrive piboticsdrive = new DifferentialDrive(leftDrive, rightDrive);
+  
+  public DriveTrain() {}
 
-  private static final MecanumDrive piboticsdrive = new MecanumDrive(lf, lr, rf, rr);
-
-  public DriveTrain() {
-    lf.setInverted(false);
-    lr.setInverted(false);
-    rf.setInverted(false);
-    rr.setInverted(false);
+  private double ApplyDeadband(double value, double deadband)
+  {
+    if (Math.abs(value) > deadband) {
+      if (value > 0.0) {
+        return (value - deadband) / (1.0 - deadband);
+      } else {
+        return (value + deadband) / (1.0 - deadband);
+      }
+    } else {
+      return 0.0;
+    }
   }
 
-  public void Drive(double y, double x, double z, double gyro) {
-    piboticsdrive.driveCartesian(-x, y, z, gyro);
-    value = rr.getMotorOutputVoltage();
-    //DriverStation.reportError(value + " " + y, false);
-  }
-
-  public void Brake(){
-    lf.setNeutralMode(NeutralMode.Brake);
-    lr.setNeutralMode(NeutralMode.Brake);
-    rf.setNeutralMode(NeutralMode.Brake);
-    rr.setNeutralMode(NeutralMode.Brake);
-  }
-
-  public void Coast(){
-    lf.setNeutralMode(NeutralMode.Coast);
-    lr.setNeutralMode(NeutralMode.Coast);
-    rf.setNeutralMode(NeutralMode.Coast);
-    rr.setNeutralMode(NeutralMode.Coast);
+  public void Drive(double y, double z, boolean stick, double yDeadband, double zDeadband)
+  {
+    piboticsdrive.arcadeDrive(ApplyDeadband(y, yDeadband), ApplyDeadband(z, zDeadband), stick);
   }
 
   @Override
@@ -57,4 +43,3 @@ public class DriveTrain extends SubsystemBase {
     // This method will be called once per scheduler run
   }
 }
-

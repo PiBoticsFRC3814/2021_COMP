@@ -14,7 +14,6 @@ package frc.robot;
  */
 public final class Constants {
     //drive paramters
-    public static final double deadzoneX = 0.1;
     public static final double deadzoneY = 0.1;
     public static final double deadzoneZ = 0.2;
     //talon IDs
@@ -22,27 +21,11 @@ public final class Constants {
     public static final int rearIntake = 11;
     public static final int mecanumIntake = 12;
     public static final int mecanumBackIntake = 14;
-    public static final int liftIntake = 13;
-    public static final int cMotor = 40;
-    public static final int bMotor = 41;
-    public static final int blMotor = 50;
-    public static final int ControlPanelMotor = 30;
+    public static final int climbMotor = 40;
+    public static final int balanceMotor = 41;
     public static final int shooterMotor = 60;
-    //mecanum drive(lf, lr, rf, rr)
-    public static final int lf = 1;
-    public static final int lr = 2;
-    public static final int rf = 3;
-    public static final int rr = 4;
-//Digital Input IDs
-    public static final int lowerInput = 1;
-    public static final int upperInput = 2;
-
-//pneumatic IDs
-    public static final int PCM1 = 0;
-    public static final int frontExtend = 0;
-    public static final int frontRetract = 1;
-    public static final int rearExtend = 2;
-    public static final int rearRetract = 3;
+    public static final int leftDrive = 1;
+    public static final int rightDrive = 2;
 
 //motor Speeds
     public static final double ballIntakeSpeed = 0.75;
@@ -52,8 +35,6 @@ public final class Constants {
     public static final double downSpeed = -1.0;
     public static final double leftSpeed = 1;
     public static final double rightSpeed = -1;
-    public static final double gateSpeed = 0.1;
-    public static final double gateReverse = -0.1;
     public static final double shooterSpeed = 0.85;
 
 //Controller IDs
@@ -67,21 +48,7 @@ public final class Constants {
     //z1 firing range
     public static final double Z1Lowest = 55;
     public static final double Z1Farthest = 67;
-    public static final double MotorSpeed1 = 1.0;
     //z2 firing range
     public static final double Z2Lowest = 118;
     public static final double Z2Farthest = 130;
-    public static final double MotorSpeed2 = 0.6;
-    //z3 firing range
-    public static final double Z3Lowest = 183;
-    public static final double Z3Farthest = 210;
-    public static final double MotorSpeed3 = 0.67;
-    //z4 firing range
-    public static final double Z4Lowest = 270;
-    public static final double Z4Farthest = 282;
-    public static final double MotorSpeed4 = 0.98;
-//auton constants
-    public static final int ReadArrayDim1 = 3;
-    public static final int ReadArrayDim2 = 10000;
-    public static final String Auton1 = "Auton1.txt";
 }

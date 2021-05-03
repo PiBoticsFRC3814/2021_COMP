@@ -39,30 +39,9 @@ public class Shoot extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (m_limelight.position1)
-    {
-        motorSpeed = Constants.MotorSpeed1;
-    }
-    else if (m_limelight.position2)
-    {
-        motorSpeed = Constants.MotorSpeed2;
-    }
-    else if (m_limelight.position3)
-    {
-        motorSpeed = Constants.MotorSpeed3;
-    }
-    else if (m_limelight.position4)
-    {
-        motorSpeed = Constants.MotorSpeed4;
-    }
-    else 
-    {
-        motorSpeed = 0.85;
-        DriverStation.reportError("Can't find valid position. Shooter isn't functional", false);
-    }
     //tempSpeed=SmartDashboard.getNumber("VariableSpeed", 0.0);
     //SmartDashboard.putNumber("VariableSpeed", tempSpeed);
-    m_shooter.WheelsOn(motorSpeed);
+    m_shooter.WheelsOn(Constants.shooterSpeed);
   }
 
   // Called once the command ends or is interrupted.

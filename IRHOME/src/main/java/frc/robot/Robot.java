@@ -66,18 +66,12 @@ public class Robot extends TimedRobot {
    */
   @Override
   public void disabledInit() {
-    try {
-      m_robotContainer.m_RecordJoystick.WriteTimeCSV();
-    } catch (IOException e) {
-      DriverStation.reportWarning("Can't Find csv", false);
-    }
   }
 
   @Override
   public void disabledPeriodic() {
     m_Limelight.offLight();
     m_robotContainer.gyro.reset();
-    m_robotContainer.m_piboticsdrive.Coast();
 
 
   }
@@ -116,12 +110,6 @@ public class Robot extends TimedRobot {
       m_autonomousCommand.cancel();
     }
     m_robotContainer.gyro.reset();
-    m_robotContainer.m_piboticsdrive.Coast();
-    try {
-      m_robotContainer.m_RecordJoystick.WriteTimeCSV();
-    } catch (IOException e) {
-      DriverStation.reportWarning("Can't Find csv", false);
-    }
   }
 
   /**

@@ -12,9 +12,6 @@ import frc.robot.subsystems.DriveTrain;
 import edu.wpi.first.wpilibj.Timer;
 
 public class CrossLine extends CommandBase {
-  
-  ADIS16448_IMU gyro;
-
   public Timer Timeguy; 
  
   private final DriveTrain m_crossline;
@@ -22,10 +19,9 @@ public class CrossLine extends CommandBase {
   /**
    * Creates a new CrossLine.
    */
-  public CrossLine(DriveTrain m_drivetrain, ADIS16448_IMU gyroscope) {
+  public CrossLine(DriveTrain m_drivetrain) {
     Timeguy = new Timer();
     m_crossline = m_drivetrain;
-    gyro = gyroscope;
     addRequirements(m_crossline);
 
     // Use addRequirements() here to declare subsystem dependencies.
@@ -36,37 +32,26 @@ public class CrossLine extends CommandBase {
   public void initialize() {
     Timeguy.reset();
     Timeguy.start();
-    m_crossline.Drive(0.0, 0.0, 0.0, 0.0);
+    m_crossline.Drive(0.0, 0.0, false, 0.0, 0.0);
     }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if (gyro.getGyroAngleX() < -1)
-    {
-      zs = -0.1;
-    }
-    else if (gyro.getGyroAngleX() > 1)
-    {
-      zs = 0.1;
-    }
-    
-    m_crossline.Drive(-0.4, 0.0, 0.0, zs);
-
-
+    m_crossline.Drive(-0.4, 0.0, false, 0.0, 0.0);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_crossline.Drive(0.0, 0.0, 0.0, 0.0);
+    m_crossline.Drive(0.0, 0.0, false, 0.0, 0.0);
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
     if(Timeguy.get() > 1.0){
-    m_crossline.Drive(0.0, 0.0, 0.0, 0.0);
+    m_crossline.Drive(0.0, 0.0, false, 0.0, 0.0);
     return true;
     }else{
       return false;

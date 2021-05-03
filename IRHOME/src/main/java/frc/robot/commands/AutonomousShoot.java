@@ -4,38 +4,44 @@
 
 package frc.robot.commands;
 
-import com.analog.adis16448.frc.ADIS16448_IMU;
-
 import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.IntakeMaintain;
 import frc.robot.subsystems.Limelight;
+import frc.robot.subsystems.Shooter;
 
-public class Z2Limelight extends CommandBase {
-  /** Creates a new Z2Limelight. */
+public class AutonomousShoot extends CommandBase {
+  /** Creates a new AutonomousShoot. */
   Limelight m_LimeLight;
   DriveTrain m_PiboticsDrive;
-  ADIS16448_IMU gyro;
+  Shooter m_Shooter;
+  IntakeMaintain m_Intake;
+  Timer shootDelay;
 
-  private static double xs, ys, zs;
+  private static double ys, zs;
   private static int timeOut = 0;
   private static int position = 0;
+  private static int counter = 0;
 
-  private Boolean isXPos = false;
   private Boolean isYPos = false;
-  private Boolean isZPos = false;
+  private Boolean isXPos = false;
   private Boolean POS = false;
 
-
-  public Z2Limelight(DriveTrain piboticsdrive, Limelight LimeLight, ADIS16448_IMU gyroscope) {
-    m_PiboticsDrive = piboticsdrive;
-    m_LimeLight = LimeLight;
-    gyro = gyroscope;
-    addRequirements(m_PiboticsDrive);
-    addRequirements(m_LimeLight);
+  public AutonomousShoot(Limelight light, Shooter shoot, DriveTrain drive, IntakeMaintain intake) {
     // Use addRequirements() here to declare subsystem dependencies.
+    m_LimeLight = light;
+    m_Shooter = shoot;
+    m_PiboticsDrive = drive;
+    m_Intake = intake;
+    shootDelay = new Timer();
+    addRequirements(m_LimeLight);
+    addRequirements(m_Shooter);
+    addRequirements(m_PiboticsDrive);
+    addRequirements(m_Intake);
   }
 
   // Called when the command is initially scheduled.
@@ -43,43 +49,46 @@ public class Z2Limelight extends CommandBase {
   public void initialize() {
     timeOut = 0;
     position = 0;
-    m_LimeLight.position2 = false;
+    counter = 0;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_LimeLight.position1 = false;
-    m_LimeLight.position3 = false;
-    m_LimeLight.position4 = false;
-    m_LimeLight.position2 = true;
     m_LimeLight.onLight();
     m_LimeLight.displayOutput();
     SmartDashboard.putBoolean("Target Acquired", m_LimeLight.isValidTarget());
 
-    if (m_LimeLight.x > 2)
+    if (m_LimeLight.x > 5)
     {
-      xs = 0.5;
+      zs = 0.5;
       isXPos = false;
     }
-    else if (m_LimeLight.x < -2)
+    else if (m_LimeLight.x < -5)
     {
-      xs = -0.5;
+      zs = -0.5;
       isXPos = false;
     }
     else
     {
-      xs = 0;
+      zs = 0;
       isXPos = true;
     }
-    if (m_LimeLight.y < Constants.Z2Lowest)
+    if (m_LimeLight.y < Constants.Z1Lowest)
     {
       ys = 0.3;
       isYPos = false;
     }
-    else if (m_LimeLight.y > Constants.Z2Farthest)
+    else if (m_LimeLight.y > Constants.Z1Farthest)
     {
-      ys = -0.3;
+      if (m_LimeLight.y <= 90)
+      {
+        ys = -0.125;
+      }
+      else
+      {
+        ys = -0.3;
+      }
       isYPos = false;
     }
     else
@@ -87,23 +96,8 @@ public class Z2Limelight extends CommandBase {
       ys = 0;
       isYPos = true;
     }
-    if (gyro.getGyroAngleX() < -1)
-    {
-      zs = -0.1;
-      isZPos = false;
-    }
-    else if (gyro.getGyroAngleX() > 1)
-    {
-      zs = 0.1;
-      isZPos = false;
-    }
-    else
-    {
-      zs = 0;
-      isZPos = true;
-    }
 
-    if (isXPos && isYPos && isZPos)
+    if (isXPos && isYPos)
     {
       position++;
       DriverStation.reportWarning("I made it to position once", false);
@@ -127,7 +121,26 @@ public class Z2Limelight extends CommandBase {
       POS = true;
       DriverStation.reportWarning("I made it to my position", false);
     }
-    m_PiboticsDrive.Drive(-ys, -xs, zs, gyro.getGyroAngleX());
+
+    if (POS && counter < 5)
+    {
+      ys = 0;
+      zs = 0;
+      if (shootDelay.get() >= 0.5)
+      {
+        m_Intake.intakeOn();;
+        Timer.delay(0.05);
+        m_Intake.intakeOff();
+        shootDelay.reset();
+        counter++;
+      }
+      else
+      {
+        m_Intake.intakeOff();
+      }
+    }
+
+    m_PiboticsDrive.Drive(-ys, -zs, false, 0.0, 0.0);
   }
 
   // Called once the command ends or is interrupted.
@@ -137,23 +150,22 @@ public class Z2Limelight extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    if (timeOut > 1000 || POS)
+    if (timeOut > 1000 || counter >= 5)
     {
-      m_PiboticsDrive.Drive(0.0, 0.0, 0.0, 0.0);
+      m_PiboticsDrive.Drive(0.0, 0.0, false, 0.0, 0.0);
       m_LimeLight.offLight();
       isXPos = false;
       isYPos = false;
-      isZPos = false;
       POS = false;
       timeOut = 0;
       position = 0;
-      SmartDashboard.putBoolean("Move Yellow", false);
-      DriverStation.reportWarning("Quit Command", false);
+      counter = 0;
+      shootDelay.stop();
+      shootDelay.reset();
       return true;
     }
     else
     {
-
       return false;
     }
   }

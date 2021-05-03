@@ -39,30 +39,19 @@ public class RobotContainer {
   private final Shooter m_shooter = new Shooter();
   private final IntakeMaintain m_IntakeMaintain = new IntakeMaintain();
   private final Limelight m_LimeLight = new Limelight();
-  private final ControlPanel m_ControlPanel = new ControlPanel();
-  public final RecordJoystick m_RecordJoystick = new RecordJoystick();
+  public final ClimbMotor m_ClimbMotor = new ClimbMotor();
+  public final BalanceMotor m_BalanceMotor = new BalanceMotor();
 
   private final Joystick driverStick = new Joystick(Constants.oi_Driver);
 
-  ///private final CommandBase m_autonomousCommand = new Autonomous1(m_piboticsdrive,m_LimeLight,m_shooter,m_IntakeMaintain);
-  
-  //private final CommandBase m_autonomousCommand = new Slolom(m_piboticsdrive,gyro);
-  //private final CommandBase m_autonomousCommand = new Barrel(m_piboticsdrive,gyro);
-  private final CommandBase m_autonomousCommand = new Bounce(m_piboticsdrive,gyro);
-
+  private final CommandBase m_autonomousCommand = new Autonomous1(m_piboticsdrive,m_LimeLight,m_shooter,m_IntakeMaintain);
 
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
-    m_piboticsdrive.setDefaultCommand(new PiboticsDrive(() -> driverStick.getY(), () -> driverStick.getX(), () -> driverStick.getZ(), () -> gyro.getGyroAngleX(), m_piboticsdrive, m_RecordJoystick));
+    m_piboticsdrive.setDefaultCommand(new PiboticsDrive(() -> driverStick.getY(), () -> driverStick.getZ(), m_piboticsdrive));
     m_LimeLight.setDefaultCommand(new GetLimelight(m_LimeLight));
-    m_ControlPanel.setDefaultCommand(new GrabColorData(m_ControlPanel));
-    SmartDashboard.putBoolean("GyroReset", false);
-    SmartDashboard.putBoolean("Move Green", false);
-    SmartDashboard.putBoolean("Move Yellow", false);
-    SmartDashboard.putBoolean("Move Blue", false);
-    SmartDashboard.putBoolean("Move Red", false);
     
 
     // Configure the button bindings
@@ -92,10 +81,6 @@ public class RobotContainer {
     final JoystickButton Outtake = new JoystickButton(driverStick, 5);
     final JoystickButton ToggleLight = new JoystickButton(driverStick, 4);
     final NetworkButton GyroReset = new NetworkButton("SmartDashboard", "GyroReset");
-    final NetworkButton LimelightZ1Network = new NetworkButton("SmartDashboard", "Move Green");
-    final NetworkButton LimelightZ2Network = new NetworkButton("SmartDashboard", "Move Yellow");
-    final NetworkButton LimelightZ3Network = new NetworkButton("SmartDashboard", "Move Blue");
-    final NetworkButton LimelightZ4Network = new NetworkButton("SmartDashboard", "Move Red");
 
     
     AllIntake.whenPressed(new AllIntakeOn(m_IntakeMaintain));
@@ -115,36 +100,6 @@ public class RobotContainer {
 
     LimelightZ1.whenPressed(new Z1Limelight(m_piboticsdrive,m_LimeLight,gyro));
     LimelightZ1.whenReleased(new GetLimelight(m_LimeLight));
-
-    LimelightZ2.whenPressed(new Z2Limelight(m_piboticsdrive,m_LimeLight,gyro));
-    LimelightZ2.whenReleased(new GetLimelight(m_LimeLight));
-
-    LimelightZ3.whenPressed(new Z3Limelight(m_piboticsdrive,m_LimeLight,gyro));
-    LimelightZ3.whenReleased(new GetLimelight(m_LimeLight));
-
-    LimelightZ4.whenPressed(new Z4Limelight(m_piboticsdrive,m_LimeLight,gyro));
-    LimelightZ4.whenReleased(new GetLimelight(m_LimeLight));
-
-    LimelightZ1Network.whenPressed(new Z1Limelight(m_piboticsdrive, m_LimeLight, gyro));
-    LimelightZ1Network.whenReleased(new GetLimelight(m_LimeLight));
-
-    LimelightZ2Network.whenPressed(new Z2Limelight(m_piboticsdrive, m_LimeLight, gyro));
-    LimelightZ2Network.whenReleased(new GetLimelight(m_LimeLight));
-
-    LimelightZ3Network.whenPressed(new Z3Limelight(m_piboticsdrive, m_LimeLight, gyro));
-    LimelightZ3Network.whenReleased(new GetLimelight(m_LimeLight));
-
-    LimelightZ4Network.whenPressed(new Z4Limelight(m_piboticsdrive, m_LimeLight, gyro));
-    LimelightZ4Network.whenReleased(new GetLimelight(m_LimeLight));
-    
-
-    
-
-
-    //Position.whenPressed(new PositionControl(m_ControlPanel));
-    //Position.whenReleased(new StopControlPanel(m_ControlPanel));
-    //Rotation.whenPressed(new RotationControl(m_ControlPanel));
-    //Rotation.whenReleased(new StopControlPanel(m_ControlPanel));
 
     ToggleLight.whenPressed(new ToggleLimelight(m_LimeLight));
     ToggleLight.whenReleased(new GetLimelight(m_LimeLight));

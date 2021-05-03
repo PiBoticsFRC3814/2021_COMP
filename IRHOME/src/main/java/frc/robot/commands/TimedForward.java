@@ -37,7 +37,6 @@ public class TimedForward extends CommandBase {
   @Override
   public void initialize() {
     autoTimer.reset();
-    m_drive.Brake();
     done = false;
   }
 
@@ -52,10 +51,10 @@ public class TimedForward extends CommandBase {
       else if (gyro.getGyroAngleX()>moveAngle){
         z=0.09;
       }
-      m_drive.Drive(moveSpeed,0.0,z,0.0);
+      m_drive.Drive(moveSpeed, z, false, 0.0, 0.0);
     }
     else {
-      m_drive.Drive(0.0,0.0,0.0,0.0);
+      m_drive.Drive(0.0, 0.0, false, 0.0, 0.0);
       done = true;
     }
   }
@@ -69,7 +68,7 @@ public class TimedForward extends CommandBase {
   public boolean isFinished() {
     if (done){
       done = false;
-      m_drive.Drive(0.0,0.0,0.0,0.0);
+      m_drive.Drive(0.0, 0.0, false, 0.0, 0.0);
       return true;
     }
     else{
