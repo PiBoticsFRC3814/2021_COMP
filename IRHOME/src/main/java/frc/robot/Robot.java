@@ -4,10 +4,7 @@
 
 package frc.robot;
 
-import java.io.IOException;
-import java.sql.Driver;
 
-import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;

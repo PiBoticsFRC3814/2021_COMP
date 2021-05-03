@@ -5,8 +5,6 @@
 package frc.robot.commands;
 
 
-import com.analog.adis16448.frc.ADIS16448_IMU;
-
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.DriveTrain;
 import edu.wpi.first.wpilibj.Timer;
@@ -15,7 +13,6 @@ public class CrossLine extends CommandBase {
   public Timer Timeguy; 
  
   private final DriveTrain m_crossline;
-  private static double zs;
   /**
    * Creates a new CrossLine.
    */

@@ -29,27 +29,6 @@ public class Limelight extends SubsystemBase {
   public Limelight() {
   }
 
-  public int closest() {
-    // 1 = short, 2 = long, 0 = no data xv
-    /*getData(gyro);
-    distanceShort = Math.abs(Constants.shortFarthest - z);
-    distanceLong = Math.abs(Constants.farLowest - z);
-
-    if (distanceLong > distanceShort)
-    {
-      closest = 1;
-    }
-    else if (distanceShort > distanceLong)
-    {
-      closest = 2;
-    }
-    else
-    {
-      closest = 0;
-    }*/
-    return closest;
-  }
-
   public void getData() {
     cameraAngle = Constants.llAngle;
     y = (Constants.tHeight-Constants.lHeight)/(Math.tan(Math.toRadians(cameraAngle+NetworkTableInstance.getDefault().getTable("limelight").getEntry("ty").getDouble(0.0))));

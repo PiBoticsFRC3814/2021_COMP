@@ -9,7 +9,6 @@ import com.analog.adis16448.frc.ADIS16448_IMU;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import frc.robot.commands.*;
 import frc.robot.subsystems.*;
 import frc.robot.subsystems.Limelight;
@@ -32,8 +31,6 @@ public class RobotContainer {
   ADIS16448_IMU gyro = new ADIS16448_IMU();
 
 
-  private final ExampleSubsystem m_exampleSubsystem = new ExampleSubsystem();
-  private final ExampleCommand m_autoCommand = new ExampleCommand(m_exampleSubsystem);
 
   public final DriveTrain m_piboticsdrive = new DriveTrain();
   private final Shooter m_shooter = new Shooter();
@@ -75,9 +72,6 @@ public class RobotContainer {
     final JoystickButton AllIntake = new JoystickButton(driverStick, 8);
     final JoystickButton Shooter = new JoystickButton(driverStick, 2);
     final JoystickButton LimelightZ1 =  new JoystickButton(driverStick, 9);
-    final JoystickButton LimelightZ2 = new JoystickButton(driverStick, 10);
-    final JoystickButton LimelightZ3 = new JoystickButton(driverStick, 11);
-    final JoystickButton LimelightZ4 = new JoystickButton(driverStick, 12);
     final JoystickButton Outtake = new JoystickButton(driverStick, 5);
     final JoystickButton ToggleLight = new JoystickButton(driverStick, 4);
     final NetworkButton GyroReset = new NetworkButton("SmartDashboard", "GyroReset");
