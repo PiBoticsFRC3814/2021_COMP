@@ -13,7 +13,7 @@ import frc.robot.subsystems.Limelight;
 import frc.robot.Constants;
 import frc.robot.subsystems.DriveTrain;
 
-public class Z1Limelight extends CommandBase {
+public class Z2Limelight extends CommandBase {
   /**
    * Creates a new LimeLight.
 /** */
@@ -28,7 +28,7 @@ public class Z1Limelight extends CommandBase {
   private Boolean isXPos = false;
   private Boolean POS = false;
 
-  public Z1Limelight(DriveTrain piboticsdrive, Limelight LimeLight) {
+  public Z2Limelight(DriveTrain piboticsdrive, Limelight LimeLight) {
     m_PiboticsDrive = piboticsdrive;
     m_LimeLight = LimeLight;
     addRequirements(m_PiboticsDrive);
@@ -66,12 +66,12 @@ public class Z1Limelight extends CommandBase {
       zs = 0;
       isXPos = true;
     }
-    if (m_LimeLight.y < Constants.Z1Lowest)
+    if (m_LimeLight.y < Constants.Z2Lowest)
     {
       ys = 0.3;
       isYPos = false;
     }
-    else if (m_LimeLight.y > Constants.Z1Farthest)
+    else if (m_LimeLight.y > Constants.Z2Farthest)
     {
       if (m_LimeLight.y <= 90)
       {
