@@ -15,7 +15,6 @@ import frc.robot.subsystems.Limelight;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import edu.wpi.first.wpilibj2.command.button.NetworkButton;
 
 
 
@@ -27,8 +26,6 @@ import edu.wpi.first.wpilibj2.command.button.NetworkButton;
  */
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
-  //ADXRS450_Gyro gyro = new ADXRS450_Gyro();
-  ADIS16448_IMU gyro = new ADIS16448_IMU();
 
 
 
@@ -40,6 +37,8 @@ public class RobotContainer {
   public final BalanceMotor m_BalanceMotor = new BalanceMotor();
 
   private final Joystick driverStick = new Joystick(Constants.oi_Driver);
+  private final Joystick operatorStick = new Joystick(Constants.oi_Operator);
+
 
   private final CommandBase m_autonomousCommand = new Autonomous1(m_piboticsdrive,m_LimeLight,m_shooter,m_IntakeMaintain);
 
@@ -72,9 +71,15 @@ public class RobotContainer {
     final JoystickButton AllIntake = new JoystickButton(driverStick, 8);
     final JoystickButton Shooter = new JoystickButton(driverStick, 2);
     final JoystickButton LimelightZ1 =  new JoystickButton(driverStick, 9);
+    final JoystickButton LimelightZ2 =  new JoystickButton(driverStick, 10);
     final JoystickButton Outtake = new JoystickButton(driverStick, 5);
-    final JoystickButton ToggleLight = new JoystickButton(driverStick, 4);
-    final NetworkButton GyroReset = new NetworkButton("SmartDashboard", "GyroReset");
+    final JoystickButton LowerOuttake = new JoystickButton(driverStick, 3);
+
+    final JoystickButton ToggleLight = new JoystickButton(operatorStick, 6);
+    final JoystickButton ClimberUp = new JoystickButton(operatorStick, 5);
+    final JoystickButton ClimberDown = new JoystickButton(operatorStick, 3);
+    final JoystickButton BalancerLeft = new JoystickButton(operatorStick, 7);
+    final JoystickButton BalancerRight = new JoystickButton(operatorStick, 8);
 
     
     AllIntake.whenPressed(new AllIntakeOn(m_IntakeMaintain));
@@ -89,16 +94,32 @@ public class RobotContainer {
     Outtake.whenPressed(new IntakeReverse(m_IntakeMaintain));
     Outtake.whenReleased(new UpperIntakeOff(m_IntakeMaintain));
 
+    LowerOuttake.whenPressed(new FrontIntakeReverse(m_IntakeMaintain));
+    LowerOuttake.whenReleased(new LowerIntakeOff(m_IntakeMaintain));
+
     Shooter.whenPressed(new Shoot(m_shooter,m_LimeLight));
     Shooter.whenReleased(new StopShoot(m_shooter,m_LimeLight));
 
-    LimelightZ1.whenPressed(new Z1Limelight(m_piboticsdrive,m_LimeLight,gyro));
+    LimelightZ1.whenPressed(new Z1Limelight(m_piboticsdrive,m_LimeLight));
     LimelightZ1.whenReleased(new GetLimelight(m_LimeLight));
+
+    LimelightZ2.whenPressed(new Z2Limelight(m_piboticsdrive,m_LimeLight));
+    LimelightZ2.whenReleased(new GetLimelight(m_LimeLight));
 
     ToggleLight.whenPressed(new ToggleLimelight(m_LimeLight));
     ToggleLight.whenReleased(new GetLimelight(m_LimeLight));
 
-    GyroReset.whenPressed(new GyroReset(gyro));
+    BalancerLeft.whenPressed(new BalanceLeft(m_BalanceMotor));
+    BalancerLeft.whenReleased(new StopBalance(m_BalanceMotor));
+
+    BalancerRight.whenPressed(new BalanceRight(m_BalanceMotor));
+    BalancerRight.whenReleased(new StopBalance(m_BalanceMotor));
+
+    ClimberUp.whenPressed(new ClimbUp(m_ClimbMotor));
+    ClimberUp.whenReleased(new ClimbStop(m_ClimbMotor));
+
+    ClimberDown.whenPressed(new ClimbDown(m_ClimbMotor));
+    ClimberDown.whenReleased(new ClimbStop(m_ClimbMotor));
   }
 
 

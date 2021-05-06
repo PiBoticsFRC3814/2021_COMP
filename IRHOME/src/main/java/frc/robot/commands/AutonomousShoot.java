@@ -55,6 +55,7 @@ public class AutonomousShoot extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    m_Shooter.WheelsOn(Constants.shooterSpeed);
     m_LimeLight.onLight();
     m_LimeLight.displayOutput();
     SmartDashboard.putBoolean("Target Acquired", m_LimeLight.isValidTarget());
@@ -81,14 +82,7 @@ public class AutonomousShoot extends CommandBase {
     }
     else if (m_LimeLight.y > Constants.Z1Farthest)
     {
-      if (m_LimeLight.y <= 90)
-      {
-        ys = -0.125;
-      }
-      else
-      {
         ys = -0.3;
-      }
       isYPos = false;
     }
     else
@@ -124,12 +118,11 @@ public class AutonomousShoot extends CommandBase {
 
     if (POS && counter < 5)
     {
-      ys = 0;
-      zs = 0;
+      shootDelay.start();
       if (shootDelay.get() >= 0.5)
       {
         m_Intake.intakeOn();;
-        Timer.delay(0.05);
+        Timer.delay(0.1);
         m_Intake.intakeOff();
         shootDelay.reset();
         counter++;
@@ -140,7 +133,7 @@ public class AutonomousShoot extends CommandBase {
       }
     }
 
-    m_PiboticsDrive.Drive(-ys, -zs, false, 0.0, 0.0);
+    m_PiboticsDrive.Drive(-ys, zs, false, 0.0, 0.0);
   }
 
   // Called once the command ends or is interrupted.
@@ -162,6 +155,8 @@ public class AutonomousShoot extends CommandBase {
       counter = 0;
       shootDelay.stop();
       shootDelay.reset();
+      m_Shooter.WheelsOn(0.0);
+
       return true;
     }
     else

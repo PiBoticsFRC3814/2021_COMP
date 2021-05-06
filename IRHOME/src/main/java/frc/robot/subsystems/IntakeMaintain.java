@@ -62,6 +62,11 @@ public class IntakeMaintain extends SubsystemBase {
     rearIndex.set(Constants.ballIntakeSpeed/2);
     frontIndex.set(-Constants.ballIntakeSpeed/2);
   }
+
+  public void lowerReverse(){
+    mecanumIntake.set(-Constants.ballIntakeSpeed/2);
+    mecanumBackIntake.set(-Constants.ballIntakeSpeed/2);
+  }
   
   
 }

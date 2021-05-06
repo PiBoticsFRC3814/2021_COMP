@@ -46,9 +46,9 @@ public final class Constants {
     public static final double llAngle = 26.1;
 
     //z1 firing range
-    public static final double Z1Lowest = 55;
-    public static final double Z1Farthest = 67;
+    public static final double Z1Lowest = 75;
+    public static final double Z1Farthest = 87;
     //z2 firing range
-    public static final double Z2Lowest = 118;
-    public static final double Z2Farthest = 130;
+    public static final double Z2Lowest = 250;
+    public static final double Z2Farthest = 260;
 }
